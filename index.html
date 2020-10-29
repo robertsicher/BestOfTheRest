@@ -31,8 +31,21 @@
                 url: queryUrlLocationDetails + entity_id + "&entity_type=" + entity_type + key 
             }).then(function(data){
                 console.log(data)
+                restaurant(data)
             }).catch(error)
             }
+
+            function restaurant(data){
+                const resturantTopRatedId = data.nearby_res[0]
+                const queryUrlResturant = "https://developers.zomato.com/api/v2.1/restaurant?res_id="
+                $.ajax({
+                url: queryUrlResturant + resturantTopRatedId + key 
+            }).then(function(data){
+                console.log(data.name)
+            }).catch(error)
+        }
+
+        
         </script>
     </body>
 </html>
