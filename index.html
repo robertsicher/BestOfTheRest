@@ -36,13 +36,18 @@
             }
 
             function restaurant(data){
-                const resturantTopRatedId = data.nearby_res[0]
+                const resturantTopRatedId = data.nearby_res
                 const queryUrlResturant = "https://developers.zomato.com/api/v2.1/restaurant?res_id="
+            for(let i = 0 ; i < resturantTopRatedId.length;i++ ){
+                 
+            
                 $.ajax({
-                url: queryUrlResturant + resturantTopRatedId + key 
+                url: queryUrlResturant + resturantTopRatedId[i] + key 
             }).then(function(data){
                 console.log(data.name)
             }).catch(error)
+            }
+            
         }
 
         
