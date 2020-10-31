@@ -1,5 +1,4 @@
 <html lang="en">
-
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,8 +9,6 @@
 	<link
 		href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kosugi+Maru&family=Press+Start+2P&display=swap"
 		rel="stylesheet">
-
-
 </head>
 
 <body data-uk-filter="target: .js-filter">
@@ -24,12 +21,13 @@
 					<h1 class="logo-text">Best of the Rest</h1>
 				</div>
 				<div class="uk-width-expand">
-					<form id="search-form" action="">
+					<form id="search-form" action="submit">
 						<div class="uk-inline uk-width-1-1">
-							<a href="" class="uk-form-icon uk-form-icon-flip" data-uk-icon="icon: search"></a>
-							<input class="uk-input uk-width-1-1 search-fld" type="text"
-								placeholder="Enter Your Postcode" autofocus>
-							<a href="#" class="search-filter" data-uk-filter-control="[data-tags*='']" hidden>Search</a>
+							<!--  this button was an a tag!-->
+							<button href="" class="uk-form-icon uk-form-icon-flip" data-uk-icon="icon: search"></button>
+							<input class="uk-input uk-width-1-1 search-fld" type="text" placeholder="Enter Your City"
+								autofocus>
+							<button class="search-filter" hidden>Search</button>
 						</div>
 					</form>
 				</div>
@@ -248,10 +246,13 @@
 	<!--/CARDS WRAPPER-->
 
 	<!-- JS FILES -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="js/script.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/uikit@latest/dist/js/uikit.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/uikit@latest/dist/js/uikit-icons.min.js"></script>
     <script src="js/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src = "js/main.js" defer></script>
 </body>
+
 </html>
