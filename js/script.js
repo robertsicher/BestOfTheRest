@@ -135,9 +135,12 @@ function placeHolderImage(restaurant) {
   }
 }
 
+function clearDisplay() {
+  restaurantDisplay.empty();
+}
 // on submit on search form it will run the function
 $("#search-form").submit(function (event) {
   event.preventDefault();
+  clearDisplay();
   citySearchQuery();
-  console.log("hello");
 });
