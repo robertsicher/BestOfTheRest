@@ -83,16 +83,14 @@ function restarauntSearch(cityOutput) {
     bestRestaurants.forEach(({ restaurant }) => {
       restaurantDisplay.append(createCard(restaurant));
       lat.push(Number(restaurant.location.latitude))
-       lon.push(Number(restaurant.location.longitude))
-       location.push(restaurant.location.locality)
-       //console.log(lat,lon)
-       initMap(lat,lon,location)
+      lon.push(Number(restaurant.location.longitude))
+      location.push(restaurant.location.locality)
+      initMap(lat,lon,location)
     });
   });
 }
 
 function createCard(restaurant) {
-  console.log(restaurant)
   return `<div>
   <div class="uk-card uk-card-small uk-card-default">
 						<div class="uk-card-header">
@@ -164,6 +162,7 @@ function initMap(lati,long,tit) {
     zoom: 12,
     center: place,
   });
+  document.querySelector("#map").style.display = "block"
   // The marker, positioned at restaurants
   for(let count = 0; count < 10; count++){
     const marker = new google.maps.Marker({
