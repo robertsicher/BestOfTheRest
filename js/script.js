@@ -74,15 +74,23 @@ function restarauntSearch(cityOutput) {
   }).then(function (restaurants) {
     //console.log("restaraunt response ", restaurants);
     const bestRestaurants = restaurants.best_rated_restaurant;
+    let lat = []
+    let lon = []
     // for each restaurant in the best restaurant array
     // will need to add more to display address, links, menus, reviews etc
+    
     bestRestaurants.forEach(({ restaurant }) => {
       restaurantDisplay.append(createCard(restaurant));
+      lat.push(Number(restaurant.location.latitude))
+       lon.push(Number(restaurant.location.longitude))
+       console.log(lat,lon)
+       initMap(lat,lon)
     });
   });
 }
 
 function createCard(restaurant) {
+  console.log(restaurant)
   return `<div>
   <div class="uk-card uk-card-small uk-card-default">
 						<div class="uk-card-header">
@@ -145,42 +153,21 @@ $("#search-form").submit(function(event) {
   citySearchQuery();
 });
 
+let map;
 
-function createCard(restaurants){
-	console.log(restaurants)
-	    return `<div>
-					<div class="uk-card uk-card-small uk-card-default">
-						<div class="uk-card-header">
-							<div class="uk-grid uk-grid-small uk-text-small" data-uk-grid>
-								<div class="uk-width-expand">
-									<span class="cat-txt"id="restaurant-name">${restaurants.name}</span>
-								</div>
-								<div class="uk-width-auto uk-text-right uk-text-muted">
-
-									<p><span data-uk-icon="icon:star; ratio: 0.8">${restaurants.user_rating.aggregate_rating}</span> <span id="rating">5</span>
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="uk-card-media-top">
-							<img src="${restaurants.featured_image}" alt="" class="uk-width-expand">
-						</div>
-						<div class="uk-card-body">
-							<h6 class="uk-margin-small-bottom uk-margin-remove-adjacent uk-text-bold">Cuisine</h6>
-							<p class="uk-text-small uk-text-muted"id="text">${restaurants.cusines}</p>
-						</div>
-						<div class="uk-card-footer">
-							<div class="uk-grid uk-grid-small uk-grid-divider uk-flex uk-flex-middle" data-uk-grid>
-								<div class="uk-width-expand uk-text-small">
-									Distance <span id="distance"></span>
-								</div>
-								<div class="uk-width-auto uk-text-right">
-									<a href="#" data-uk-tooltip="title: Instagram" class="uk-icon-link"
-										data-uk-icon="icon:instagram; ratio: 0.8"></a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>`
-
+function initMap(lati,long) {
+  // The location of restaurants
+  const place = { lat: lati[0], lng: long[0]};
+  // The map, centered at Uluru
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 12,
+    center: place,
+  });
+  // The marker, positioned at restaurants
+  for(let count = 0; count < 10; count++){
+    const marker = new google.maps.Marker({
+      position: new google.maps.LatLng(lati[count], long[count]),
+      map: map,
+    });
+  }
 }
