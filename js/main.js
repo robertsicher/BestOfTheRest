@@ -1,7 +1,6 @@
 const apiKey = "&apikey=b718873bcc30e1bfc3eb75f18f1a3f5a"
 const queryUrlLocation = "https://developers.zomato.com/api/v2.1/locations?query="
-const locations = "London"
-
+const locations = "Birmingham,GB"
 $.ajax({
     url: queryUrlLocation + locations + apiKey
 }).then(locationDetails).catch(error)
