@@ -42,6 +42,7 @@ UIkit.util.on(filterBtn, "click", function () {
 const citySearch = $(".search-fld");
 const apiKey = "&apikey=b718873bcc30e1bfc3eb75f18f1a3f5a";
 const queryUrlLocation = "https://developers.zomato.com/api/v2.1/cities?q=";
+const restaurantDisplay = $("#restaurant-display");
 
 // takes input when user searches for city
 function citySearchQuery() {
@@ -75,25 +76,72 @@ function restarauntSearch(cityOutput) {
     const bestRestaurants = restaurants.best_rated_restaurant;
     // for each restaurant in the best restaurant array
     // will need to add more to display address, links, menus, reviews etc
-    bestRestaurants.forEach(({restaurant}) => {
-      /* let restArray = restaurant.restaurant;
-      let restName = restArray.name;
-      let restLocation = restArray.location.zipcode;
-      let restRating = restArray.user_rating.aggregate_rating;
-      console.log("Restaurant Name", restName);
-      console.log("Restaurant Postcode", restLocation);
-	  console.log("Restaurant Rating", restRating); */
-	  console.log(JSON.stringify(restaurant))
-	  const restarauntCards =$("#restaurant-name")
-	   restarauntCards.append(createCard(restaurant))
-	  
+    bestRestaurants.forEach(({ restaurant }) => {
+      restaurantDisplay.append(createCard(restaurant));
     });
   });
 }
 
+function createCard(restaurant) {
+  return `<div>
+  <div class="uk-card uk-card-small uk-card-default">
+						<div class="uk-card-header">
+							<div class="uk-grid uk-grid-small uk-text-small" data-uk-grid>
+								<div class="uk-width-expand">
+									<span class="cat-txt"id="restaurant-name">${restaurant.name}</span>
+								</div>
+								<div class="uk-width-auto uk-text-right uk-text-muted">
+									<p><span data-uk-icon="icon:star; ratio: 0.8"></span> <span class="rating"id="Rating">${
+                    restaurant.user_rating.aggregate_rating
+                  }</span>
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="uk-card-media-top">
+							<img src="${placeHolderImage(restaurant)}" alt="" class="uk-width-expand">
+						</div>
+						<div class="uk-card-body">
+							<h6 class="uk-margin-small-bottom uk-margin-remove-adjacent uk-text-bold">${reduceCuisines(
+                restaurant.cuisines,
+                3
+              )}</h6>
+							<p class="uk-text-small uk-text-muted"id="text">Text preview: Duis aute irure dolor in reprehenderit
+								in voluptate velit</p>
+						</div>
+						<div class="uk-card-footer">
+							<div class="uk-grid uk-grid-small uk-grid-divider uk-flex uk-flex-middle" data-uk-grid>
+								<div class="uk-width-expand uk-text-small">
+									Distance <span id="distance"></span>
+								</div>
+								<div class="uk-width-auto uk-text-right">
+									<a href="#" data-uk-tooltip="title: Website" class="uk-icon-link"
+										data-uk-icon="icon:world; ratio: 0.8"></a>
+								</div>
+							</div>
+						</div>
+          </div>
+          </div>`;
+}
+
+function reduceCuisines(cuisines, amount) {
+  return cuisines.split(",").splice(0, amount);
+}
+function placeHolderImage(restaurant) {
+  if (restaurant.thumb === "") {
+    return "https://b.zmtcdn.com/data/res_imagery/6901231_RESTAURANT_1411209781_bcefdf54eb44508de82466b5f63922c6_c.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A";
+  } else {
+    return restaurant.thumb;
+  }
+}
+
+function clearDisplay() {
+  restaurantDisplay.empty();
+}
 // on submit on search form it will run the function
 $("#search-form").submit(function(event) {
   event.preventDefault();
+  clearDisplay();
   citySearchQuery();
 });
 
