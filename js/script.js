@@ -50,7 +50,7 @@ function citySearchQuery() {
     url: queryUrlLocation + citySearch.val() + apiKey,
   })
     .then(function (response) {
-      console.log("city response", response);
+      //console.log("city response", response);
       // returned with an array of options for search
       let countryName = response.location_suggestions;
       // filtering to only use the United Kingdom option
@@ -72,12 +72,20 @@ function restarauntSearch(cityOutput) {
   $.ajax({
     url: queryURLRestaurant + cityOutput + "&entity_type=city" + apiKey,
   }).then(function (restaurants) {
-    console.log("restaraunt response ", restaurants);
+    //console.log("restaraunt response ", restaurants);
     const bestRestaurants = restaurants.best_rated_restaurant;
+    let lat = []
+    let lon = []
+    let location = []
     // for each restaurant in the best restaurant array
     // will need to add more to display address, links, menus, reviews etc
+    
     bestRestaurants.forEach(({ restaurant }) => {
       restaurantDisplay.append(createCard(restaurant));
+      lat.push(Number(restaurant.location.latitude))
+      lon.push(Number(restaurant.location.longitude))
+      location.push(restaurant.location.locality)
+      initMap(lat,lon,location)
     });
   });
 }
@@ -139,8 +147,28 @@ function clearDisplay() {
   restaurantDisplay.empty();
 }
 // on submit on search form it will run the function
-$("#search-form").submit(function (event) {
+$("#search-form").submit(function(event) {
   event.preventDefault();
   clearDisplay();
   citySearchQuery();
 });
+
+
+function initMap(lati,long,tit) {
+  // The location of restaurants
+  const place = { lat: lati[0], lng: long[0]}; 
+  // The map, centered at restaurants
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 12,
+    center: place,
+  });
+  document.querySelector("#map").style.display = "block"
+  // The marker, positioned at restaurants
+  for(let count = 0; count < 10; count++){
+    const marker = new google.maps.Marker({
+      position: new google.maps.LatLng(lati[count], long[count]),
+      map: map,
+      title: tit[count],
+    });
+  }
+}

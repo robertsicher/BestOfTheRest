@@ -176,3 +176,14 @@ img[data-src][src*='data:image'] { background: rgba(0,0,0,0.1); }
 	border-radius: 3px;
 	box-shadow: 0 4px 14px rgba(0,0,0,0.1);
 }
+
+/* Set the size of the div element that contains the map */
+#map {
+	display:none;
+	height: 400px;
+	/* The height is 400 pixels */
+	width: 100%;
+	/* The width is the width of the web page */
+	padding-left:0px;
+	margin-left:0px;
+  }
