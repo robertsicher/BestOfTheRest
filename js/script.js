@@ -76,6 +76,7 @@ function restarauntSearch(cityOutput) {
     const bestRestaurants = restaurants.best_rated_restaurant;
     let lat = []
     let lon = []
+    let location = []
     // for each restaurant in the best restaurant array
     // will need to add more to display address, links, menus, reviews etc
     
@@ -83,8 +84,9 @@ function restarauntSearch(cityOutput) {
       restaurantDisplay.append(createCard(restaurant));
       lat.push(Number(restaurant.location.latitude))
        lon.push(Number(restaurant.location.longitude))
-       console.log(lat,lon)
-       initMap(lat,lon)
+       location.push(restaurant.location.locality)
+       //console.log(lat,lon)
+       initMap(lat,lon,location)
     });
   });
 }
@@ -153,12 +155,11 @@ $("#search-form").submit(function(event) {
   citySearchQuery();
 });
 
-let map;
 
-function initMap(lati,long) {
+function initMap(lati,long,tit) {
   // The location of restaurants
-  const place = { lat: lati[0], lng: long[0]};
-  // The map, centered at Uluru
+  const place = { lat: lati[0], lng: long[0]}; 
+  // The map, centered at restaurants
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
     center: place,
@@ -168,6 +169,7 @@ function initMap(lati,long) {
     const marker = new google.maps.Marker({
       position: new google.maps.LatLng(lati[count], long[count]),
       map: map,
+      title: tit[count],
     });
   }
 }
