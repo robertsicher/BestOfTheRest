@@ -18,7 +18,11 @@ h1{
     color: white;
 }
 
+.green{
+	color:  lawngreen;
 }
+
+
 #site-foot {
 	position: fixed;
 	z-index: 3;
