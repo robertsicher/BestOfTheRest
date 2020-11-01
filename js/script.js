@@ -122,7 +122,8 @@ function createCard(restaurant) {
 								<div class="uk-width-expand uk-text-small">
 									Distance <span id="distance"></span>
 								</div>
-								<div class="uk-width-auto uk-text-right">
+                <div class="uk-width-auto uk-text-right">
+                
 									<a href="#" data-uk-tooltip="title: Website" class="uk-icon-link"
 										data-uk-icon="icon:world; ratio: 0.8"></a>
 								</div>
