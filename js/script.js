@@ -137,8 +137,10 @@ function reduceCuisines(cuisines, amount) {
   return cuisines.split(",").splice(0, amount);
 }
 function placeHolderImage(restaurant) {
+  const placeholderText = "Image Coming Soon"
+  console.log(placeholderText)
   if (restaurant.thumb === "") {
-    return <a href="https://placeholder.com"><img src="https://via.placeholder.com/309/000000/FFFFFF?text= Best Of The Rest <br> Image coming soon!!" ></img></a>;
+    return "https://via.placeholder.com/309/000000/FFFFFF?text=" + placeholderText
   } else {
     return restaurant.thumb;
   }
