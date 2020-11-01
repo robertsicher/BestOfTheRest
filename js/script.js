@@ -122,7 +122,8 @@ function createCard(restaurant) {
 								<div class="uk-width-expand uk-text-small">
 									Distance <span id="distance"></span>
 								</div>
-								<div class="uk-width-auto uk-text-right">
+                <div class="uk-width-auto uk-text-right">
+                
 									<a href="#" data-uk-tooltip="title: Website" class="uk-icon-link"
 										data-uk-icon="icon:world; ratio: 0.8"></a>
 								</div>
@@ -137,7 +138,7 @@ function reduceCuisines(cuisines, amount) {
 }
 function placeHolderImage(restaurant) {
   if (restaurant.thumb === "") {
-    return "https://b.zmtcdn.com/data/res_imagery/6901231_RESTAURANT_1411209781_bcefdf54eb44508de82466b5f63922c6_c.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A";
+    return <a href="https://placeholder.com"><img src="https://via.placeholder.com/309/000000/FFFFFF?text= Best Of The Rest <br> Image coming soon!!" ></img></a>;
   } else {
     return restaurant.thumb;
   }
