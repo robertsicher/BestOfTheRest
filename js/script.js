@@ -137,7 +137,7 @@ function reduceCuisines(cuisines, amount) {
 }
 function placeHolderImage(restaurant) {
   if (restaurant.thumb === "") {
-    return <a href="https://placeholder.com"><img src="https://via.placeholder.com/309/000000/FFFFFF?text=IPaddress.net" ></img></a>;
+    return <a href="https://placeholder.com"><img src="https://via.placeholder.com/309/000000/FFFFFF?text= Best Of The Rest <br> Image coming soon!!" ></img></a>;
   } else {
     return restaurant.thumb;
   }
