@@ -2,6 +2,18 @@
 	font-family: 'Bebas Neue', cursive;
 }
 
+.place-holder {
+width: 100%;
+height: 100%;
+background-color:grey;
+}
+
+.place-holder-text{
+	font-family: 'Bebas Neue', cursive;
+	padding: 60px 0;
+	text-align: center;
+}
+
 #site-head {
 	padding: 10px 0;
 	position: fixed;

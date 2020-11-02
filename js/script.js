@@ -43,12 +43,14 @@ const citySearch = $(".search-fld");
 const apiKey = "&apikey=b718873bcc30e1bfc3eb75f18f1a3f5a";
 const queryUrlLocation = "https://developers.zomato.com/api/v2.1/cities?q=";
 const restaurantDisplay = $("#restaurant-display");
+const preSearchPlaceHolder = $(".place-holder");
+const filterDisplay = $("#cuisineFilters")
 
 // takes input when user searches for city
 function citySearchQuery() {
   $.ajax({
-    url: queryUrlLocation + citySearch.val() + apiKey,
-  })
+      url: queryUrlLocation + citySearch.val() + apiKey,
+    })
     .then(function (response) {
       //console.log("city response", response);
       // returned with an array of options for search
@@ -68,6 +70,7 @@ function citySearchQuery() {
 
 const queryURLRestaurant =
   "https://developers.zomato.com/api/v2.1/location_details?entity_id=";
+
 function restarauntSearch(cityOutput) {
   $.ajax({
     url: queryURLRestaurant + cityOutput + "&entity_type=city" + apiKey,
@@ -79,13 +82,15 @@ function restarauntSearch(cityOutput) {
     let location = []
     // for each restaurant in the best restaurant array
     // will need to add more to display address, links, menus, reviews etc
-    
-    bestRestaurants.forEach(({ restaurant }) => {
+
+    bestRestaurants.forEach(({
+      restaurant
+    }) => {
       restaurantDisplay.append(createCard(restaurant));
       lat.push(Number(restaurant.location.latitude))
       lon.push(Number(restaurant.location.longitude))
       location.push(restaurant.location.locality)
-      initMap(lat,lon,location)
+      initMap(lat, lon, location)
     });
   });
 }
@@ -133,9 +138,24 @@ function createCard(restaurant) {
           </div>`;
 }
 
+function clearPlaceholder() {
+  preSearchPlaceHolder.remove();
+}
+
+function appendFilter(){
+return `<ul class="uk-subnav uk-subnav-pill">
+<li class="uk-active" data-uk-filter-control><a href="#">Show All</a></li>
+<li data-uk-filter-control=".chinese-card"><a href="#">Asian</a></li>
+<li data-uk-filter-control=".indian-card"><a href="#">Indian</a></li>
+<li data-uk-filter-control=".italian-card"><a href="#">Italian</a></li>
+<li data-uk-filter-control=".english-card"><a href="#">English</a></li>
+</ul>`;
+}
+
 function reduceCuisines(cuisines, amount) {
   return cuisines.split(",").splice(0, amount);
 }
+
 function placeHolderImage(restaurant) {
   const placeholderText = "Image Coming Soon"
   console.log(placeholderText)
@@ -150,16 +170,21 @@ function clearDisplay() {
   restaurantDisplay.empty();
 }
 // on submit on search form it will run the function
-$("#search-form").submit(function(event) {
+$("#search-form").submit(function (event) {
   event.preventDefault();
+  clearPlaceholder();
   clearDisplay();
+  filterDisplay.append(appendFilter);
   citySearchQuery();
+  
 });
 
-
-function initMap(lati,long,tit) {
+function initMap(lati, long, tit) {
   // The location of restaurants
-  const place = { lat: lati[0], lng: long[0]}; 
+  const place = {
+    lat: lati[0],
+    lng: long[0]
+  };
   // The map, centered at restaurants
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
@@ -167,7 +192,7 @@ function initMap(lati,long,tit) {
   });
   document.querySelector("#map").style.display = "block"
   // The marker, positioned at restaurants
-  for(let count = 0; count < 10; count++){
+  for (let count = 0; count < 10; count++) {
     const marker = new google.maps.Marker({
       position: new google.maps.LatLng(lati[count], long[count]),
       map: map,
