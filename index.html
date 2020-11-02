@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,34 +50,29 @@
 	<!--CARDS WRAPPER-->
 	<section class="uk-section uk-section-small uk-section-default uk-padding-remove-bottom">
 		<div class="uk-container uk-container-expand uk-margin-large-bottom">
-			<ul class="uk-subnav uk-subnav-pill">
-				<li class="uk-active" data-uk-filter-control style="display: none;"><a href="#">Show All</a></li>
-				<li data-uk-filter-control=".chinese-card"class="hide"><a href="#">Asian</a></li>
-				<li data-uk-filter-control=".indian-card"class="hide"><a href="#">Indian</a></li>
-				<li data-uk-filter-control=".italian-card"class="hide"><a href="#">Italian</a></li>
-				<li data-uk-filter-control=".english-card"class="hide"><a href="#">English</a></li>
-			</ul>
-			<div id="restaurant-display"
-				class="uk-grid uk-grid-medium uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l  uk-child-width-1-5@xl uk-grid-match js-filter"
-				data-uk-grid="masonry: true" data-uk-sortable="handle: .drag-icon">
-			</div>
-		</div>
 
-		<p> Welcome to Best Of The Rest a brand new website which is going to change the way the UK eats out 
-			our new website will take the hassle out of searching for the top restaurants in your city as voted by critics and narrow it down
-			to the top 10 in your city. <br><br> It is updated in real time based on the number of positive reviews recived.
-			You can also narrow it down further by choice of cuisines so you can find the top 10 of any cuisine. <br> <br>
-			To begin using this fantastic website please click the arrow below. Input the name of the city you are in and click search, 
-			from there you can go into each restaurant. Read reviews,view pictures, get directions and go directly 
-			to their website to book a table quoting Best Of The Rest for a 10 percent discount on your final bill 
-			<br> <br>lets get you wining and dining in the best restaurants in the UK at amazing prices. 
-			</p>
+			<div class="uk-subnav uk-subnav-pill" id="cuisine-container">
+				<ul class="uk-subnav uk-subnav-pill">
+					<li class="uk-active" data-uk-filter-control><button id='all-card' data-cuisine="0">Show All</li>
+					<li data-uk-filter-control=".chinese-card"><button id="asian-card" data-cuisine="3">Asian</button>
+					</li>
+					<li data-uk-filter-control=".indian-card"><button id="indian-card"
+							data-cuisine="148">Indian</button>
+					</li>
+					<li data-uk-filter-control=".italian-card"><button id='italian-card'
+							data-cuisine="55">Italian</button>
+					</li>
+					<li data-uk-filter-control=".english-card"> <button id="english-card"
+							data-cuisine="133">English</button></li>
+				</ul>
+			</div>
 
 	</section>
 	<!--/CARDS WRAPPER-->
 	<!-- Google MAP-->
-	<div id="map" class="uk-grid uk-grid-medium uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l  uk-child-width-1-5@xl uk-grid-match js-filter"
-	data-uk-grid="masonry: true" data-uk-sortable="handle: .drag-icon"></div>
+	<div id="map"
+		class="uk-grid uk-grid-medium uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l  uk-child-width-1-5@xl uk-grid-match js-filter"
+		data-uk-grid="masonry: true" data-uk-sortable="handle: .drag-icon"></div>
 
 	<!-- JS FILES -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -84,6 +80,9 @@
 	<script src="https://cdn.jsdelivr.net/npm/uikit@latest/dist/js/uikit.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/uikit@latest/dist/js/uikit-icons.min.js"></script>
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIwzALxUPNbatRBj3Xi1Uhp0fFzwWNBkE&callback=initMap&libraries=&v=weekly"defer></script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIwzALxUPNbatRBj3Xi1Uhp0fFzwWNBkE&callback=initMap&libraries=&v=weekly"
+		defer></script>
 </body>
+
 </html>

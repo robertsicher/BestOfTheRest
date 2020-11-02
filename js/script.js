@@ -43,6 +43,7 @@ const citySearch = $(".search-fld");
 const apiKey = "&apikey=b718873bcc30e1bfc3eb75f18f1a3f5a";
 const queryUrlLocation = "https://developers.zomato.com/api/v2.1/cities?q=";
 const restaurantDisplay = $("#restaurant-display");
+let currentCityID = "";
 
 // takes input when user searches for city
 function citySearchQuery() {
@@ -50,7 +51,6 @@ function citySearchQuery() {
     url: queryUrlLocation + citySearch.val() + apiKey,
   })
     .then(function (response) {
-      //console.log("city response", response);
       // returned with an array of options for search
       let countryName = response.location_suggestions;
       // filtering to only use the United Kingdom option
@@ -59,33 +59,50 @@ function citySearchQuery() {
       });
       // getting the CityID from the city search API to then use in the next function
       const cityOutput = output[0].id;
-      restarauntSearch(cityOutput);
+      currentCityID = cityOutput;
+      developedRestaurantSearch(cityOutput);
     })
     .catch(function () {
       alert("Invalid City");
     });
 }
 
-const queryURLRestaurant =
-  "https://developers.zomato.com/api/v2.1/location_details?entity_id=";
-function restarauntSearch(cityOutput) {
+const cuisineArray = [];
+$("#cuisine-container button").click(function () {
+  let cuisineData = $(this).attr("data-cuisine");
+  console.log("clicked", cuisineData);
+  if (cuisineData && currentCityID) {
+    developedRestaurantSearch(currentCityID, cuisineData);
+  }
+});
+const developedSearchStart =
+  "https://developers.zomato.com/api/v2.1/search?entity_id=";
+const developedSearchEnd = "&entity_type=city&count=10&sort=rating&order=desc";
+function developedRestaurantSearch(cityOutput, cuisineID) {
+  clearDisplay();
+  const cuisineSearch = "&cuisines=" + cuisineID;
   $.ajax({
-    url: queryURLRestaurant + cityOutput + "&entity_type=city" + apiKey,
+    url:
+      developedSearchStart +
+      cityOutput +
+      cuisineSearch +
+      developedSearchEnd +
+      apiKey,
   }).then(function (restaurants) {
-    //console.log("restaraunt response ", restaurants);
-    const bestRestaurants = restaurants.best_rated_restaurant;
-    let lat = []
-    let lon = []
-    let location = []
+    console.log("restaraunt response ", restaurants);
+    const bestRestaurants = restaurants.restaurants;
+    let lat = [];
+    let lon = [];
+    let location = [];
     // for each restaurant in the best restaurant array
     // will need to add more to display address, links, menus, reviews etc
-    
+
     bestRestaurants.forEach(({ restaurant }) => {
       restaurantDisplay.append(createCard(restaurant));
-      lat.push(Number(restaurant.location.latitude))
-      lon.push(Number(restaurant.location.longitude))
-      location.push(restaurant.location.locality)
-      initMap(lat,lon,location)
+      lat.push(Number(restaurant.location.latitude));
+      lon.push(Number(restaurant.location.longitude));
+      location.push(restaurant.location.locality);
+      initMap(lat, lon, location);
     });
   });
 }
@@ -114,8 +131,7 @@ function createCard(restaurant) {
                 restaurant.cuisines,
                 3
               )}</h6>
-							<p class="uk-text-small uk-text-muted"id="text">Text preview: Duis aute irure dolor in reprehenderit
-								in voluptate velit</p>
+							<p class="uk-text-small uk-text-muted"id="text">${restaurant.timings}</p>
 						</div>
 						<div class="uk-card-footer">
 							<div class="uk-grid uk-grid-small uk-grid-divider uk-flex uk-flex-middle" data-uk-grid>
@@ -137,10 +153,11 @@ function reduceCuisines(cuisines, amount) {
   return cuisines.split(",").splice(0, amount);
 }
 function placeHolderImage(restaurant) {
-  const placeholderText = "Image Coming Soon"
-  console.log(placeholderText)
+  const placeholderText = "Image Coming Soon";
   if (restaurant.thumb === "") {
-    return "https://via.placeholder.com/309/000000/FFFFFF?text=" + placeholderText
+    return (
+      "https://via.placeholder.com/309/000000/FFFFFF?text=" + placeholderText
+    );
   } else {
     return restaurant.thumb;
   }
@@ -149,25 +166,25 @@ function placeHolderImage(restaurant) {
 function clearDisplay() {
   restaurantDisplay.empty();
 }
+
 // on submit on search form it will run the function
-$("#search-form").submit(function(event) {
+$("#search-form").submit(function (event) {
   event.preventDefault();
   clearDisplay();
   citySearchQuery();
 });
 
-
-function initMap(lati,long,tit) {
+function initMap(lati, long, tit) {
   // The location of restaurants
-  const place = { lat: lati[0], lng: long[0]}; 
+  const place = { lat: lati[0], lng: long[0] };
   // The map, centered at restaurants
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
     center: place,
   });
-  document.querySelector("#map").style.display = "block"
+  document.querySelector("#map").style.display = "block";
   // The marker, positioned at restaurants
-  for(let count = 0; count < 10; count++){
+  for (let count = 0; count < 10; count++) {
     const marker = new google.maps.Marker({
       position: new google.maps.LatLng(lati[count], long[count]),
       map: map,
@@ -175,4 +192,4 @@ function initMap(lati,long,tit) {
     });
   }
 }
-
+ 
