@@ -175,3 +175,4 @@ function initMap(lati,long,tit) {
     });
   }
 }
+
