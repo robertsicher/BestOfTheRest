@@ -22,6 +22,10 @@ h1{
 	color:  lawngreen;
 }
 
+body{
+	background-image:url("bestoftherest.jpg")
+}
+
 
 #site-foot {
 	position: fixed;
@@ -187,3 +191,9 @@ img[data-src][src*='data:image'] { background: rgba(0,0,0,0.1); }
 	padding-left:0px;
 	margin-left:0px;
   }
+
+  /* added hide feature to hide and remove display as and when needed*/
+  .hide{
+	display: none;
+  }
+  p{ text-align: center;}
