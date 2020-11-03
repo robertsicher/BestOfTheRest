@@ -43,6 +43,8 @@ const citySearch = $(".search-fld");
 const apiKey = "&apikey=b718873bcc30e1bfc3eb75f18f1a3f5a";
 const queryUrlLocation = "https://developers.zomato.com/api/v2.1/cities?q=";
 const restaurantDisplay = $("#restaurant-display");
+const sectionDisplay = $('#section')
+const preSearchPlaceHolder = $(".place-holder");
 let currentCityID = "";
 
 // takes input when user searches for city
@@ -163,16 +165,62 @@ function placeHolderImage(restaurant) {
   }
 }
 
+//Clear the current search function
 function clearDisplay() {
   restaurantDisplay.empty();
 }
 
-// on submit on search form it will run the function
+//IF ELSE statement to minimise code
+//function showSection(){
+//  if ($("#section").hasClass("hide")){
+//    $("section").removeClass("hide").addClass("no-hide");
+//  }else ($("#section").hasClass("no-hide")){
+//    $("section").removeClass("no-hide").addClass();
+//  }
+//}
+
+//Show the filters / show the box for the cards
+function showSection(){
+  sectionDisplay.removeClass("hide")
+}
+
+//Hide the filters
+function hideSection(){
+  sectionDisplay.addClass("hide")
+}
+
+//Clear the pre search place holder
+function clearPlaceholder() {
+  preSearchPlaceHolder.addClass("hide");
+}
+
+//Add the placholder
+function addPlaceholder() {
+  preSearchPlaceHolder.removeClass("hide");
+}
+
+function clearSearchField() {
+  citySearch.val("") 
+}
+
+
+//On submit on search form it will run the function
 $("#search-form").submit(function (event) {
   event.preventDefault();
+  clearPlaceholder();
   clearDisplay();
+  showSection();
   citySearchQuery();
 });
+
+//Home button to go back to the main placholder screen
+$("#reset").click(function(){
+  clearDisplay();
+  hideSection();
+  addPlaceholder();
+  clearSearchField();
+
+})
 
 function initMap(lati, long, tit) {
   // The location of restaurants
