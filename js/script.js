@@ -43,7 +43,7 @@ const citySearch = $(".search-fld");
 const apiKey = "&apikey=b718873bcc30e1bfc3eb75f18f1a3f5a";
 const queryUrlLocation = "https://developers.zomato.com/api/v2.1/cities?q=";
 const restaurantDisplay = $("#restaurant-display");
-const sectionDisplay = $('#section')
+const sectionDisplay = $("#section");
 const preSearchPlaceHolder = $(".place-holder");
 let currentCityID = "";
 
@@ -142,7 +142,9 @@ function createCard(restaurant) {
 								</div>
                 <div class="uk-width-auto uk-text-right">
                 
-									<a href="#" data-uk-tooltip="title: Website" class="uk-icon-link"
+									<a href="${
+                    restaurant.url
+                  }" target="_blank" data-uk-tooltip="title: Website" class="uk-icon-link"
 										data-uk-icon="icon:world; ratio: 0.8"></a>
 								</div>
 							</div>
@@ -180,13 +182,13 @@ function clearDisplay() {
 //}
 
 //Show the filters / show the box for the cards
-function showSection(){
-  sectionDisplay.removeClass("hide")
+function showSection() {
+  sectionDisplay.removeClass("hide");
 }
 
 //Hide the filters
-function hideSection(){
-  sectionDisplay.addClass("hide")
+function hideSection() {
+  sectionDisplay.addClass("hide");
 }
 
 //Clear the pre search place holder
@@ -200,9 +202,8 @@ function addPlaceholder() {
 }
 
 function clearSearchField() {
-  citySearch.val("") 
+  citySearch.val("");
 }
-
 
 //On submit on search form it will run the function
 $("#search-form").submit(function (event) {
@@ -214,13 +215,12 @@ $("#search-form").submit(function (event) {
 });
 
 //Home button to go back to the main placholder screen
-$("#reset").click(function(){
+$("#reset").click(function () {
   clearDisplay();
   hideSection();
   addPlaceholder();
   clearSearchField();
-
-})
+});
 
 function initMap(lati, long, tit) {
   // The location of restaurants
@@ -240,4 +240,3 @@ function initMap(lati, long, tit) {
     });
   }
 }
- 
