@@ -28,6 +28,11 @@ h1 {
   background-color: grey;
 }
 
+.uk-placeholder{
+  border: none;
+  padding: 5px 20px 10px 20px;
+}
+
 .place-holder-text {
   font-family: "Bebas Neue", cursive;
   padding: 60px 0;
@@ -82,6 +87,7 @@ h1 {
   letter-spacing: 0.01em;
 }
 
+<<<<<<< Updated upstream
 .uk-placeholder{
   border: none;
   padding: 10px 20px;
@@ -91,6 +97,8 @@ h1 {
   padding-top: 5px;
 }
 
+=======
+>>>>>>> Stashed changes
 .uk-subnav li a {
   border-radius: 3px;
 }
