@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Best of the Rest</title>
 	<!-- CSS FILES -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/uikit@latest/dist/css/uikit.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link
@@ -75,8 +76,8 @@
 	</div>
 	<!--CARDS WRAPPER-->
 	<section id="section" class="uk-section uk-section-small uk-section-default uk-padding-remove-bottom hide">
-		<div class="uk-container uk-container-expand uk-margin-large-bottom" id="cuisine-container">
-			<ul class="uk-subnav uk-subnav-pill">
+		<!-- 	<div class="uk-container uk-container-expand uk-margin-large-bottom">
+			<ul uk-dropdown="boundary: .my-class; boundary-align: true" class="uk-subnav uk-subnav-pill">
 				<li class="uk-active" data-uk-filter-control><button id='all-card' data-cuisine="0">Show All</li>
 				<li data-uk-filter-control=".chinese-card"><button id="asian-card" data-cuisine="3">Asian</button>
 				</li>
@@ -87,10 +88,30 @@
 				<li data-uk-filter-control=".english-card"> <button id="english-card"
 						data-cuisine="133">English</button></li>
 			</ul>
-			<div id="restaurant-display"
-				class="uk-grid uk-grid-medium uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l  uk-child-width-1-5@xl uk-grid-match js-filter"
-				data-uk-grid="masonry: true" data-uk-sortable="handle: .drag-icon">
+		</div> -->
+		<div class="boundary-align uk-panel uk-placeholder">
+
+			<button class="uk-button uk-button-default uk-float-left" type="button">Cuisine</button>
+			<div uk-dropdown="pos: bottom-justify; boundary: .boundary-align; boundary-align: true"
+				id="cuisine-container">
+				<div class="uk-nav uk-dropdown-nav grid-layout">
+					<button id='all-card' class='uk-button' data-cuisine="0">Top 10</button>
+					<button id="asian-card" class='uk-button' data-cuisine="3">Asian</button>
+
+					<button id="indian-card" class='uk-button' data-cuisine="148">Indian</button>
+
+					<button id='italian-card' class='uk-button' data-cuisine="55">Italian</button>
+
+					<button id="english-card" class='uk-button' data-cuisine="133">English</button></li>
+				</div>
 			</div>
+
+		</div>
+
+		<div id="restaurant-display"
+			class="uk-grid uk-grid-medium uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l  uk-child-width-1-5@xl uk-grid-match js-filter"
+			data-uk-grid="masonry: true" data-uk-sortable="handle: .drag-icon">
+		</div>
 		</div>
 
 	</section>

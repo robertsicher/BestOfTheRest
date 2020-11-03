@@ -106,12 +106,13 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
       location.push(restaurant.location.locality);
       initMap(lat, lon, location);
     });
+    $(".animate-fade-in").fadeIn(1000);
   });
 }
 
 function createCard(restaurant) {
   return `<div>
-  <div class="uk-card uk-card-small uk-card-default">
+  <div class="uk-card uk-card-small uk-card-default animate-fade-in hide">
 						<div class="uk-card-header">
 							<div class="uk-grid uk-grid-small uk-text-small" data-uk-grid>
 								<div class="uk-width-expand">
