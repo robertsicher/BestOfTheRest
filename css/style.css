@@ -82,8 +82,13 @@ h1 {
   letter-spacing: 0.01em;
 }
 
-.nature-card .uk-card {
-  border-top-color: #1e87f0;
+.uk-placeholder{
+  border: none;
+  padding: 10px 20px;
+}
+
+.cuisine-padding{
+  padding-top: 5px;
 }
 
 .uk-subnav li a {
@@ -100,34 +105,6 @@ h1 {
 
 .uk-subnav li.uk-active:nth-child(5) a {
   background-color: #e84df0;
-}
-
-.english-card .uk-card .cat-txt {
-  color: #1e87f0;
-}
-
-.music-card .uk-card {
-  border-top-color: #8630f0;
-}
-
-.music-card .uk-card .cat-txt {
-  color: #8630f0;
-}
-
-.design-card .uk-card {
-  border-top-color: #e84df0;
-}
-
-.design-card .uk-card .cat-txt {
-  color: #e84df0;
-}
-
-.photo-card .uk-card {
-  border-top-color: #f03a7f;
-}
-
-.chinese-card .uk-card .cat-txt {
-  color: #f03a7f;
 }
 
 .uk-card .uk-overlay-primary {
