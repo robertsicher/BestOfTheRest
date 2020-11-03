@@ -18,8 +18,8 @@
 	<header id="site-head">
 		<div class="uk-container uk-container-expand">
 			<div class="uk-grid uk-grid-medium uk-flex uk-flex-middle" data-uk-grid>
-				<div class="uk-width-auto">
-					<h1 class="logo-text"><span class="green"> best</span> of the Rest</h1>
+				<div class="uk-width-auto uk-width-expand@s">
+					<h1 class="logo-text"><span class="green"> Best</span> of the Rest</h1>
 				</div>
 				<div class="uk-width-expand">
 					<form id="search-form" action="submit">
@@ -34,15 +34,39 @@
 				</div>
 				<div class="uk-width-auto">
 					<ul class="uk-subnav" data-uk-margin>
-						<li class="uk-visible@s"><a href="#">Home</a></li>
-						<li class="uk-visible@s"><a href="#">About Us</a></li>
-						<li class="uk-hidden@s"><a data-uk-navbar-toggle-icon data-uk-toggle href="#offcanvas-nav"></a>
-						</li>
+						<li id="reset" class="uk-visible@s"><a href="#">Home</a></li>
+						<li class="uk-visible@s"><a href="#modal-center" uk-toggle>About Us</a></li>
+						<div id="modal-center" class="uk-flex-top" uk-modal>
+							<div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+
+								<button class="uk-modal-close-default" type="button" uk-close></button>
+
+								<div class="uk-child-width-expand@s" uk-grid>
+									<div class="uk-grid-item-match">
+
+										<h3>About Us</h3>
+										<p>
+											Here at Best of the Rest we aim to make life simpler. 
+											<br>
+											Hungry for some amazing food? 
+											<br>
+											Let us show you the top 10 restaurants in the city you're
+											going to.
+										</p>
+
+									</div>
+
+								</div>
+
+							</div>
+						</div>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</header>
+
+
 	<!--/HEADER-->
 	<div class="spacer"></div>
 	<!--Placholder-->

@@ -170,15 +170,41 @@ function clearDisplay() {
   restaurantDisplay.empty();
 }
 
+//IF ELSE statement to minimise code
+//function showSection(){
+//  if ($("#section").hasClass("hide")){
+//    $("section").removeClass("hide").addClass("no-hide");
+//  }else ($("#section").hasClass("no-hide")){
+//    $("section").removeClass("no-hide").addClass();
+//  }
+//}
+
+//Show the filters / show the box for the cards
 function showSection(){
   sectionDisplay.removeClass("hide")
 }
 
-function clearPlaceholder() {
-  preSearchPlaceHolder.remove();
+//Hide the filters
+function hideSection(){
+  sectionDisplay.addClass("hide")
 }
 
-// on submit on search form it will run the function
+//Clear the pre search place holder
+function clearPlaceholder() {
+  preSearchPlaceHolder.addClass("hide");
+}
+
+//Add the placholder
+function addPlaceholder() {
+  preSearchPlaceHolder.removeClass("hide");
+}
+
+function clearSearchField() {
+  citySearch.val("") 
+}
+
+
+//On submit on search form it will run the function
 $("#search-form").submit(function (event) {
   event.preventDefault();
   clearPlaceholder();
@@ -186,6 +212,15 @@ $("#search-form").submit(function (event) {
   showSection();
   citySearchQuery();
 });
+
+//Home button to go back to the main placholder screen
+$("#reset").click(function(){
+  clearDisplay();
+  hideSection();
+  addPlaceholder();
+  clearSearchField();
+
+})
 
 function initMap(lati, long, tit) {
   // The location of restaurants
