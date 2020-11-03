@@ -44,6 +44,7 @@ const apiKey = "&apikey=b718873bcc30e1bfc3eb75f18f1a3f5a";
 const queryUrlLocation = "https://developers.zomato.com/api/v2.1/cities?q=";
 const restaurantDisplay = $("#restaurant-display");
 const sectionDisplay = $('#section')
+const preSearchPlaceHolder = $(".place-holder");
 let currentCityID = "";
 
 // takes input when user searches for city
@@ -173,9 +174,14 @@ function showSection(){
   sectionDisplay.removeClass("hide")
 }
 
+function clearPlaceholder() {
+  preSearchPlaceHolder.remove();
+}
+
 // on submit on search form it will run the function
 $("#search-form").submit(function (event) {
   event.preventDefault();
+  clearPlaceholder();
   clearDisplay();
   showSection();
   citySearchQuery();
