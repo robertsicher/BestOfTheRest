@@ -134,12 +134,16 @@ function createCard(restaurant) {
                 restaurant.cuisines,
                 3
               )}</h6>
-							<p class="uk-text-small uk-text-muted"id="text">${restaurant.timings}</p>
+							<p class="uk-text-small uk-text-muted"id="text">${
+                restaurant.location.address
+              }</p>
 						</div>
 						<div class="uk-card-footer">
 							<div class="uk-grid uk-grid-small uk-grid-divider uk-flex uk-flex-middle" data-uk-grid>
 								<div class="uk-width-expand uk-text-small">
-									Distance <span id="distance"></span>
+                ${priceCalculator(
+                  restaurant.average_cost_for_two
+                )} <span id="distance"></span>
 								</div>
                 <div class="uk-width-auto uk-text-right">
                 
@@ -157,6 +161,17 @@ function createCard(restaurant) {
 function reduceCuisines(cuisines, amount) {
   return cuisines.split(",").splice(0, amount);
 }
+
+function priceCalculator(priceForTwo) {
+  if (priceForTwo <= 40) {
+    return "£";
+  } else if (priceForTwo < 60) {
+    return "££";
+  } else {
+    return "£££";
+  }
+}
+
 function placeHolderImage(restaurant) {
   const placeholderText = "Image Coming Soon";
   if (restaurant.thumb === "") {
