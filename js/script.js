@@ -48,9 +48,7 @@ function citySearchQuery() {
       cityNameArray.push(cityName);
       addToHistory(cityName);
     })
-    .catch(function () {
-      alert("Error");
-    });
+    .catch(badSearchReturn);
 }
 
 // Adds any search from user to search history list
@@ -85,21 +83,22 @@ historyDropdown.on("click", function (event) {
 });
 
 //Alert to create a pop up to suggest changes to the edit
-//function badSearch() {
-//return ` <div uk-alert>
-//<a class="uk-alert-close" uk-close></a>
-//<h3>Notice</h3>
-//<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-//labore et dolore magna aliqua.</p>
-//</div>`
-//}
+function badSearch() {
+return `<div uk-alert>
+<a class="uk-alert-close" uk-close></a>
+<h3>Notice</h3>
+<p>Sorry...</p>
+<p>The city you are searching for was not found.</p>
+</div>`
+}
 
-//function badSearchReturn() {
-//if ($("#alert-box").innerHTML === "") {
-//$("#alert-box").html(badSearch())
-//}
-//}
+ 
+function badSearchReturn(){
+ let badSearchText =  badSearch()
+$("#alert-box").html(badSearchText)
+}
 
+ 
 // each cuisine button has data corresponding to cuisine ID search in API
 $("#cuisine-container button").click(function () {
   let cuisineData = $(this).attr("data-cuisine");
@@ -136,7 +135,9 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
       lat.push(Number(restaurant.location.latitude));
       lon.push(Number(restaurant.location.longitude));
       location.push(restaurant.location.locality);
-      initMap(lat, lon, location);
+ 
+      initMap(lat, lon, location); 
+ 
     });
     // animates cards to look nicer
     $(".animate-fade-in").fadeIn(1000);
@@ -223,6 +224,7 @@ function placeHolderImage(restaurant) {
 //Clear the current search function
 function clearDisplay() {
   restaurantDisplay.empty();
+  $("#alert-box").html("")
 }
 
 //Show the filters / show the box for the cards
