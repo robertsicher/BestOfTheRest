@@ -43,16 +43,33 @@ const citySearch = $(".search-fld");
 const apiKey = "&apikey=b718873bcc30e1bfc3eb75f18f1a3f5a";
 const queryUrlLocation = "https://developers.zomato.com/api/v2.1/cities?q=";
 const restaurantDisplay = $("#restaurant-display");
-const sectionDisplay = $('#section')
+const sectionDisplay = $("#section");
 const preSearchPlaceHolder = $(".place-holder");
-const alertBox = $("#alert-box")
+const historyDropdown = $("#historyDropdown");
+const searchHistory = $(".searchHistory");
+const historyButton = $(".historyButton");
+const alertBox = $("#alert-box");
 let currentCityID = "";
+const cityNameArray = [];
+
+$(window).ready(function () {
+  setSearchHistory();
+});
+
+function setSearchHistory() {
+  historyDropdown.empty();
+  let searchStorage = localStorage.getItem("citySearches");
+  let searchArray = JSON.parse(searchStorage);
+  searchArray.forEach((search) => {
+    historyDropdown.append(addHistoryButton(search));
+  });
+}
 
 // takes input when user searches for city
 function citySearchQuery() {
   $.ajax({
-      url: queryUrlLocation + citySearch.val() + apiKey,
-    })
+    url: queryUrlLocation + citySearch.val() + apiKey,
+  })
     .then(function (response) {
       // returned with an array of options for search
       let countryName = response.location_suggestions;
@@ -62,34 +79,77 @@ function citySearchQuery() {
       });
       // getting the CityID from the city search API to then use in the next function
       const cityOutput = output[0].id;
+      const cityName = output[0].name;
       currentCityID = cityOutput;
       developedRestaurantSearch(cityOutput);
+      // pushing city name to an array on search
+      cityNameArray.push(cityName);
+      addToHistory(cityName);
     })
     .catch(function () {
       alert("Error");
     });
 }
+function addToHistory(cityName) {
+  const citySearches = JSON.parse(localStorage.getItem("citySearches"));
+  if (citySearches) {
+    const citySearch = citySearches.find((c) => c === cityName);
+    if (!citySearch) {
+      citySearches.push(cityName);
+      localStorage.setItem("citySearches", JSON.stringify(citySearches));
+    }
+  } else {
+    localStorage.setItem("citySearches", JSON.stringify([cityName]));
+  }
+  setSearchHistory();
+}
+
+// function to create the search history buttons
+/* function searchHistoryButtons(cityNameArray) {
+  // create an array with only unique entries
+  let uniqueSearches = Array.from(new Set(cityNameArray));
+  console.log(uniqueSearches);
+  // set to session storage
+  localStorage.setItem("City Searches", JSON.stringify(uniqueSearches));
+  uniqueSearches.forEach((search) => {
+    historyDropdown.append(addHistoryButton(search));
+  });
+} */
+
+function addHistoryButton(search) {
+  return `<li class="uk-active">
+  <button class='historyButton uk-button uk-button-link' data-location='${search}'>${search}</button>
+  </li>
+  `;
+}
+
+historyDropdown.on("click", function (event) {
+  let historyData = event.target.getAttribute("data-location");
+  citySearch.val(historyData);
+  $(".search-filter").click();
+});
 
 //Alert to create a pop up to suggest changes to the edit
 //function badSearch() {
-  //return ` <div uk-alert>
-  //<a class="uk-alert-close" uk-close></a>
-  //<h3>Notice</h3>
-  //<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-    //labore et dolore magna aliqua.</p>
+//return ` <div uk-alert>
+//<a class="uk-alert-close" uk-close></a>
+//<h3>Notice</h3>
+//<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+//labore et dolore magna aliqua.</p>
 //</div>`
 //}
 
 //function badSearchReturn() {
-  //if ($("#alert-box").innerHTML === "") {
-    //$("#alert-box").html(badSearch())
-  //}
+//if ($("#alert-box").innerHTML === "") {
+//$("#alert-box").html(badSearch())
+//}
 //}
 
 const cuisineArray = [];
+
 $("#cuisine-container button").click(function () {
   let cuisineData = $(this).attr("data-cuisine");
-  console.log("clicked", cuisineData);
+  console.log(cuisineData);
   if (cuisineData && currentCityID) {
     developedRestaurantSearch(currentCityID, cuisineData);
   }
@@ -103,7 +163,8 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
   clearDisplay();
   const cuisineSearch = "&cuisines=" + cuisineID;
   $.ajax({
-    url: developedSearchStart +
+    url:
+      developedSearchStart +
       cityOutput +
       cuisineSearch +
       developedSearchEnd +
@@ -117,21 +178,20 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
     // for each restaurant in the best restaurant array
     // will need to add more to display address, links, menus, reviews etc
 
-    bestRestaurants.forEach(({
-      restaurant
-    }) => {
+    bestRestaurants.forEach(({ restaurant }) => {
       restaurantDisplay.append(createCard(restaurant));
       lat.push(Number(restaurant.location.latitude));
       lon.push(Number(restaurant.location.longitude));
       location.push(restaurant.location.locality);
-      initMap(lat, lon, location);
+       initMap(lat, lon, location); 
     });
+    $(".animate-fade-in").fadeIn(1000);
   });
 }
 
 function createCard(restaurant) {
   return `<div>
-  <div class="uk-card uk-card-small uk-card-default">
+  <div class="uk-card uk-card-small uk-card-default animate-fade-in hide">
 						<div class="uk-card-header">
 							<div class="uk-grid uk-grid-small uk-text-small" data-uk-grid>
 								<div class="uk-width-expand">
@@ -153,7 +213,7 @@ function createCard(restaurant) {
                 restaurant.cuisines,
                 3
               )}</h6>
-							<p class="uk-text-small uk-text-muted"id="text">${
+							<p class="uk-text-small uk-text-muted address-height"id="text">${
                 restaurant.location.address
               }</p>
 						</div>
@@ -166,7 +226,9 @@ function createCard(restaurant) {
 								</div>
                 <div class="uk-width-auto uk-text-right">
                 
-									<a href="#" data-uk-tooltip="title: Website" class="uk-icon-link"
+									<a href="${
+                    restaurant.url
+                  }" target="_blank" data-uk-tooltip="title: Website" class="uk-icon-link"
 										data-uk-icon="icon:world; ratio: 0.8"></a>
 								</div>
 							</div>
@@ -215,13 +277,13 @@ function clearDisplay() {
 //}
 
 //Show the filters / show the box for the cards
-function showSection(){
-  sectionDisplay.removeClass("hide")
+function showSection() {
+  sectionDisplay.removeClass("hide");
 }
 
 //Hide the filters
-function hideSection(){
-  sectionDisplay.addClass("hide")
+function hideSection() {
+  sectionDisplay.addClass("hide");
 }
 
 //Clear the pre search place holder
@@ -235,9 +297,8 @@ function addPlaceholder() {
 }
 
 function clearSearchField() {
-  citySearch.val("") 
+  citySearch.val("");
 }
-
 
 //On submit on search form it will run the function
 $("#search-form").submit(function (event) {
@@ -249,15 +310,14 @@ $("#search-form").submit(function (event) {
 });
 
 //Home button to go back to the main placholder screen
-$("#reset").click(function(){
+$("#reset").click(function () {
   clearDisplay();
   hideSection();
   addPlaceholder();
   clearSearchField();
+});
 
-})
-
-function initMap(lati, long, tit) {
+ function initMap(lati, long, tit) {
   // The location of restaurants
   let text = `\nClick on me to open the directions in google maps.`
   const place = {

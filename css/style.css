@@ -30,13 +30,13 @@ h1 {
   background-size: cover;
 }
 
-.uk-placeholder{
+.uk-placeholder {
   border: none;
   padding: 50px 20px 10px 20px;
 }
 
 .place-holder-text {
-  font-family: 'Tangerine', cursive;
+  font-family: "Tangerine", cursive;
   padding: 260px 0;
   text-align: center;
   font-size: 100px;
@@ -199,7 +199,23 @@ p {
 
 .grid-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
   gap: 1rem;
   text-align: center;
+}
+
+#searchHistory {
+  display: inline;
+  white-space: pre-wrap;
+  text-align: center;
+  margin: 10px;
+}
+
+button {
+  padding: 0;
+  text-align: center;
+}
+
+.address-height {
+  height: 30px;
 }
