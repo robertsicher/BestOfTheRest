@@ -277,7 +277,7 @@ function initMap(lati, long, tit) {
   };
   // The map, centered at restaurants
   const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 12,
+    zoom: 11,
     center: place,
   });
   document.querySelector("#map").style.display = "block";
