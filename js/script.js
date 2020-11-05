@@ -45,8 +45,10 @@ const queryUrlLocation = "https://developers.zomato.com/api/v2.1/cities?q=";
 const restaurantDisplay = $("#restaurant-display");
 const sectionDisplay = $("#section");
 const preSearchPlaceHolder = $(".place-holder");
+
 const searchHistory = $(".searchHistory");
 const historyButton = $(".historyButton");
+const alertBox = $("#alert-box")
 let currentCityID = "";
 const cityNameArray = [];
 
@@ -61,8 +63,8 @@ $(window).ready(function () {
 // takes input when user searches for city
 function citySearchQuery() {
   $.ajax({
-    url: queryUrlLocation + citySearch.val() + apiKey,
-  })
+      url: queryUrlLocation + citySearch.val() + apiKey,
+    })
     .then(function (response) {
       // returned with an array of options for search
       let countryName = response.location_suggestions;
@@ -81,7 +83,7 @@ function citySearchQuery() {
       searchHistoryButtons(cityNameArray);
     })
     .catch(function () {
-      alert("Invalid City");
+      alert("Error");
     });
 }
 // function to create the search history buttons
@@ -110,6 +112,24 @@ $(".searchHistory").on("click", function (event) {
   $(".search-filter").click();
 });
 
+//Alert to create a pop up to suggest changes to the edit
+//function badSearch() {
+  //return ` <div uk-alert>
+  //<a class="uk-alert-close" uk-close></a>
+  //<h3>Notice</h3>
+  //<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+    //labore et dolore magna aliqua.</p>
+//</div>`
+//}
+
+//function badSearchReturn() {
+  //if ($("#alert-box").innerHTML === "") {
+    //$("#alert-box").html(badSearch())
+  //}
+//}
+
+const cuisineArray = [];
+
 $("#cuisine-container button").click(function () {
   let cuisineData = $(this).attr("data-cuisine");
   console.log(cuisineData);
@@ -121,12 +141,12 @@ $("#cuisine-container button").click(function () {
 const developedSearchStart =
   "https://developers.zomato.com/api/v2.1/search?entity_id=";
 const developedSearchEnd = "&entity_type=city&count=10&sort=rating&order=desc";
+
 function developedRestaurantSearch(cityOutput, cuisineID) {
   clearDisplay();
   const cuisineSearch = "&cuisines=" + cuisineID;
   $.ajax({
-    url:
-      developedSearchStart +
+    url: developedSearchStart +
       cityOutput +
       cuisineSearch +
       developedSearchEnd +
@@ -140,7 +160,9 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
     // for each restaurant in the best restaurant array
     // will need to add more to display address, links, menus, reviews etc
 
-    bestRestaurants.forEach(({ restaurant }) => {
+    bestRestaurants.forEach(({
+      restaurant
+    }) => {
       restaurantDisplay.append(createCard(restaurant));
       lat.push(Number(restaurant.location.latitude));
       lon.push(Number(restaurant.location.longitude));
@@ -281,7 +303,10 @@ $("#reset").click(function () {
 
 /* function initMap(lati, long, tit) {
   // The location of restaurants
-  const place = { lat: lati[0], lng: long[0] };
+  const place = {
+    lat: lati[0],
+    lng: long[0]
+  };
   // The map, centered at restaurants
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
@@ -297,4 +322,3 @@ $("#reset").click(function () {
     });
   }
 }
- */
