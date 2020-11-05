@@ -1,44 +1,3 @@
-/* var search = UIkit.util.$(".search-fld");
-var searchVal = UIkit.util.$(".search-filter");
-var filterBtn = UIkit.util.$$("li[data-uk-filter-control] a");
-var formEl = UIkit.util.$("#search-form");
-var debounce;
-
-UIkit.util.on(search, "keyup", function () {
-  clearTimeout(debounce);
-  debounce = setTimeout(function () {
-    var value = search.value;
-    var finalValue = value.toLowerCase();
-    var searchTerm = "";
-
-    if (value.length) searchTerm = '[data-tags*="' + finalValue + '"]';
-    UIkit.util.attr(searchVal, "data-uk-filter-control", searchTerm);
-    searchVal.click();
-  }, 300);
-});
-
-// prevent send form on press enter
-UIkit.util.on(formEl, "keypress", function (e) {
-  var key = e.charCode || e.keyCode || 0;
-  if (key == 13) {
-    e.preventDefault();
-    console.log("Prevent submit on press enter");
-  }
-});
-
-// empty field and attribute on click filter button
-UIkit.util.on(filterBtn, "click", function () {
-  var inputVal = search.value;
-  if (inputVal.length) {
-    // empty field
-    search.value = "";
-    searchTerm = '[data-tags*=""]';
-    // empty attribute
-    UIkit.util.attr(searchVal, "data-uk-filter-control", searchTerm);
-    console.log("empty field and attribute");
-  }
-}); */
-
 const citySearch = $(".search-fld");
 const apiKey = "&apikey=b718873bcc30e1bfc3eb75f18f1a3f5a";
 const queryUrlLocation = "https://developers.zomato.com/api/v2.1/cities?q=";
@@ -52,12 +11,15 @@ const alertBox = $("#alert-box");
 let currentCityID = "";
 const cityNameArray = [];
 
+// On page load run the search history function
 $(window).ready(function () {
   setSearchHistory();
 });
 
 function setSearchHistory() {
+  //empty previous search history
   historyDropdown.empty();
+  // get search history from local storage and append to dropwdown menu
   let searchStorage = localStorage.getItem("citySearches");
   let searchArray = JSON.parse(searchStorage);
   searchArray.forEach((search) => {
@@ -88,9 +50,12 @@ function citySearchQuery() {
     })
     .catch(badSearchReturn);
 }
+
+// Adds any search from user to search history list
 function addToHistory(cityName) {
   const citySearches = JSON.parse(localStorage.getItem("citySearches"));
   if (citySearches) {
+    // if it finds the string in local storage don't add to array
     const citySearch = citySearches.find((c) => c === cityName);
     if (!citySearch) {
       citySearches.push(cityName);
@@ -102,26 +67,16 @@ function addToHistory(cityName) {
   setSearchHistory();
 }
 
-// function to create the search history buttons
-/* function searchHistoryButtons(cityNameArray) {
-  // create an array with only unique entries
-  let uniqueSearches = Array.from(new Set(cityNameArray));
-  console.log(uniqueSearches);
-  // set to session storage
-  localStorage.setItem("City Searches", JSON.stringify(uniqueSearches));
-  uniqueSearches.forEach((search) => {
-    historyDropdown.append(addHistoryButton(search));
-  });
-} */
-
+// returns html for dropdown list
 function addHistoryButton(search) {
   return `<li class="uk-active">
   <button class='historyButton uk-button uk-button-link' data-location='${search}'>${search}</button>
   </li>
   `;
 }
-
+// on click of button item in dropdown
 historyDropdown.on("click", function (event) {
+  // each button has data location, sets data to search box val and create click
   let historyData = event.target.getAttribute("data-location");
   citySearch.val(historyData);
   $(".search-filter").click();
@@ -142,8 +97,7 @@ function badSearchReturn(){
 $("#alert-box").html(badSearchText)
 }
 
-const cuisineArray = [];
-
+// each cuisine button has data corresponding to cuisine ID search in API
 $("#cuisine-container button").click(function () {
   let cuisineData = $(this).attr("data-cuisine");
   console.log(cuisineData);
@@ -152,6 +106,7 @@ $("#cuisine-container button").click(function () {
   }
 });
 
+// API search that uses cuisine ID and City ID
 const developedSearchStart =
   "https://developers.zomato.com/api/v2.1/search?entity_id=";
 const developedSearchEnd = "&entity_type=city&count=10&sort=rating&order=desc";
@@ -173,19 +128,23 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
     let lon = [];
     let location = [];
     // for each restaurant in the best restaurant array
-    // will need to add more to display address, links, menus, reviews etc
-
     bestRestaurants.forEach(({ restaurant }) => {
       restaurantDisplay.append(createCard(restaurant));
       lat.push(Number(restaurant.location.latitude));
       lon.push(Number(restaurant.location.longitude));
       location.push(restaurant.location.locality);
+<<<<<<< HEAD
       initMap(lat, lon, location); 
+=======
+      initMap(lat, lon, location);
+>>>>>>> main
     });
+    // animates cards to look nicer
     $(".animate-fade-in").fadeIn(1000);
   });
 }
 
+// inner HTML for each card, template literals used to navigate array
 function createCard(restaurant) {
   return `<div>
   <div class="uk-card uk-card-small uk-card-default animate-fade-in hide">
@@ -216,7 +175,7 @@ function createCard(restaurant) {
 						</div>
 						<div class="uk-card-footer">
 							<div class="uk-grid uk-grid-small uk-grid-divider uk-flex uk-flex-middle" data-uk-grid>
-								<div class="uk-width-expand uk-text-small">
+                <div class="uk-width-expand uk-text-small">
                 ${priceCalculator(
                   restaurant.average_cost_for_two
                 )} <span id="distance"></span>
@@ -234,10 +193,12 @@ function createCard(restaurant) {
           </div>`;
 }
 
+// reduces cuisines to 3 in card
 function reduceCuisines(cuisines, amount) {
   return cuisines.split(",").splice(0, amount);
 }
 
+// pound sign representing price for two
 function priceCalculator(priceForTwo) {
   if (priceForTwo <= 40) {
     return "£";
@@ -248,6 +209,7 @@ function priceCalculator(priceForTwo) {
   }
 }
 
+// placeholder Image for cards that have no image
 function placeHolderImage(restaurant) {
   const placeholderText = "Image Coming Soon";
   if (restaurant.thumb === "") {
@@ -264,15 +226,6 @@ function clearDisplay() {
   restaurantDisplay.empty();
   $("#alert-box").html("")
 }
-
-//IF ELSE statement to minimise code
-//function showSection(){
-//  if ($("#section").hasClass("hide")){
-//    $("section").removeClass("hide").addClass("no-hide");
-//  }else ($("#section").hasClass("no-hide")){
-//    $("section").removeClass("no-hide").addClass();
-//  }
-//}
 
 //Show the filters / show the box for the cards
 function showSection() {
@@ -315,12 +268,16 @@ $("#reset").click(function () {
   clearSearchField();
 });
 
- function initMap(lati, long, tit) {
+function initMap(lati, long, tit) {
   // The location of restaurants
+<<<<<<< HEAD
   let text = `\nClick on me to open the directions in google maps.`
+=======
+  let text = `\nClick on me to open the directions in google maps.`;
+>>>>>>> main
   const place = {
     lat: lati[0],
-    lng: long[0]
+    lng: long[0],
   };
   // The map, centered at restaurants
   const map = new google.maps.Map(document.getElementById("map"), {
@@ -336,6 +293,19 @@ $("#reset").click(function () {
       position: new google.maps.LatLng(lati[count], long[count]),
       map: map,
       title: tit[count] + text,
+<<<<<<< HEAD
+=======
+    });
+    marker.addListener("click", () => {
+      if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+      } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      }
+      window.open(
+        `https://www.google.com/maps/search/?api=1&query=${lati[count]},${long[count]}`
+      );
+>>>>>>> main
     });
     marker.addListener("click",() =>{
       if (marker.getAnimation() !== null) {
