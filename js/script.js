@@ -259,6 +259,7 @@ $("#reset").click(function(){
 
 function initMap(lati, long, tit) {
   // The location of restaurants
+  let text = `\nClick on me to open the directions in google maps.`
   const place = {
     lat: lati[0],
     lng: long[0]
@@ -270,11 +271,21 @@ function initMap(lati, long, tit) {
   });
   document.querySelector("#map").style.display = "block";
   // The marker, positioned at restaurants
-  for (let count = 0; count < 10; count++) {
+  for (let count = 0; count < lati.length; count++) {
     const marker = new google.maps.Marker({
+      draggable: true,
+      animation: google.maps.Animation.DROP,
       position: new google.maps.LatLng(lati[count], long[count]),
       map: map,
-      title: tit[count],
+      title: tit[count] + text,
     });
+    marker.addListener("click",() =>{
+      if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+      } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      }
+      window.open(`https://www.google.com/maps/search/?api=1&query=${lati[count]},${long[count]}`)
+    })
   }
 }
