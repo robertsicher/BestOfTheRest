@@ -86,9 +86,7 @@ function citySearchQuery() {
       cityNameArray.push(cityName);
       addToHistory(cityName);
     })
-    .catch(function () {
-      alert("Error");
-    });
+    .catch(badSearchReturn);
 }
 function addToHistory(cityName) {
   const citySearches = JSON.parse(localStorage.getItem("citySearches"));
@@ -130,20 +128,19 @@ historyDropdown.on("click", function (event) {
 });
 
 //Alert to create a pop up to suggest changes to the edit
-//function badSearch() {
-//return ` <div uk-alert>
-//<a class="uk-alert-close" uk-close></a>
-//<h3>Notice</h3>
-//<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-//labore et dolore magna aliqua.</p>
-//</div>`
-//}
+function badSearch() {
+return `<div uk-alert>
+<a class="uk-alert-close" uk-close></a>
+<h3>Notice</h3>
+<p>Sorry...</p>
+<p>The city you are searching for was not found.</p>
+</div>`
+}
 
-//function badSearchReturn() {
-//if ($("#alert-box").innerHTML === "") {
-//$("#alert-box").html(badSearch())
-//}
-//}
+function badSearchReturn(){
+ let badSearchText =  badSearch()
+$("#alert-box").html(badSearchText)
+}
 
 const cuisineArray = [];
 
@@ -183,7 +180,7 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
       lat.push(Number(restaurant.location.latitude));
       lon.push(Number(restaurant.location.longitude));
       location.push(restaurant.location.locality);
-       initMap(lat, lon, location); 
+      initMap(lat, lon, location); 
     });
     $(".animate-fade-in").fadeIn(1000);
   });
