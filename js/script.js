@@ -45,8 +45,20 @@ const queryUrlLocation = "https://developers.zomato.com/api/v2.1/cities?q=";
 const restaurantDisplay = $("#restaurant-display");
 const sectionDisplay = $('#section')
 const preSearchPlaceHolder = $(".place-holder");
+
+const searchHistory = $(".searchHistory");
+const historyButton = $(".historyButton");
 const alertBox = $("#alert-box")
 let currentCityID = "";
+const cityNameArray = [];
+
+$(window).ready(function () {
+  let searchStorage = localStorage.getItem("City Searches");
+  let searchArray = JSON.parse(searchStorage);
+  searchArray.forEach((search) => {
+    searchHistory.append(addHistoryButton(search));
+  });
+});
 
 // takes input when user searches for city
 function citySearchQuery() {
@@ -62,13 +74,43 @@ function citySearchQuery() {
       });
       // getting the CityID from the city search API to then use in the next function
       const cityOutput = output[0].id;
+      const cityName = output[0].name;
       currentCityID = cityOutput;
       developedRestaurantSearch(cityOutput);
+      console.log(cityName);
+      // pushing city name to an array on search
+      cityNameArray.push(cityName);
+      searchHistoryButtons(cityNameArray);
     })
     .catch(function () {
       alert("Error");
     });
 }
+// function to create the search history buttons
+function searchHistoryButtons(cityNameArray) {
+  // create an array with only unique entries
+  let uniqueSearches = Array.from(new Set(cityNameArray));
+  console.log(uniqueSearches);
+  // set to session storage
+  localStorage.setItem("City Searches", JSON.stringify(uniqueSearches));
+  /*  uniqueSearches.forEach((search) => {
+    searchHistory.append(addHistoryButton(search));
+  }); */
+}
+
+function addHistoryButton(search) {
+  return ` 
+  <button class='historyButton uk-button uk-button-secondary' id='10' data-location='${search}'>${search}</button>
+  
+  `;
+}
+
+$(".searchHistory").on("click", function (event) {
+  let historyData = event.target.getAttribute("data-location");
+  citySearch.val(historyData);
+  citySearchQuery();
+  $(".search-filter").click();
+});
 
 //Alert to create a pop up to suggest changes to the edit
 //function badSearch() {
@@ -87,9 +129,10 @@ function citySearchQuery() {
 //}
 
 const cuisineArray = [];
+
 $("#cuisine-container button").click(function () {
   let cuisineData = $(this).attr("data-cuisine");
-  console.log("clicked", cuisineData);
+  console.log(cuisineData);
   if (cuisineData && currentCityID) {
     developedRestaurantSearch(currentCityID, cuisineData);
   }
@@ -124,7 +167,7 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
       lat.push(Number(restaurant.location.latitude));
       lon.push(Number(restaurant.location.longitude));
       location.push(restaurant.location.locality);
-      initMap(lat, lon, location);
+      /* initMap(lat, lon, location); */
     });
   });
 }
@@ -257,7 +300,7 @@ $("#reset").click(function(){
 
 })
 
-function initMap(lati, long, tit) {
+/* function initMap(lati, long, tit) {
   // The location of restaurants
   const place = {
     lat: lati[0],
