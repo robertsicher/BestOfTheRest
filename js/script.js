@@ -43,7 +43,7 @@ const citySearch = $(".search-fld");
 const apiKey = "&apikey=b718873bcc30e1bfc3eb75f18f1a3f5a";
 const queryUrlLocation = "https://developers.zomato.com/api/v2.1/cities?q=";
 const restaurantDisplay = $("#restaurant-display");
-const sectionDisplay = $('#section')
+const sectionDisplay = $("#section");
 const preSearchPlaceHolder = $(".place-holder");
 
 const searchHistory = $(".searchHistory");
@@ -167,14 +167,15 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
       lat.push(Number(restaurant.location.latitude));
       lon.push(Number(restaurant.location.longitude));
       location.push(restaurant.location.locality);
-      /* initMap(lat, lon, location); */
+       initMap(lat, lon, location); 
     });
+    $(".animate-fade-in").fadeIn(1000);
   });
 }
 
 function createCard(restaurant) {
   return `<div>
-  <div class="uk-card uk-card-small uk-card-default">
+  <div class="uk-card uk-card-small uk-card-default animate-fade-in hide">
 						<div class="uk-card-header">
 							<div class="uk-grid uk-grid-small uk-text-small" data-uk-grid>
 								<div class="uk-width-expand">
@@ -209,7 +210,9 @@ function createCard(restaurant) {
 								</div>
                 <div class="uk-width-auto uk-text-right">
                 
-									<a href="#" data-uk-tooltip="title: Website" class="uk-icon-link"
+									<a href="${
+                    restaurant.url
+                  }" target="_blank" data-uk-tooltip="title: Website" class="uk-icon-link"
 										data-uk-icon="icon:world; ratio: 0.8"></a>
 								</div>
 							</div>
@@ -258,13 +261,13 @@ function clearDisplay() {
 //}
 
 //Show the filters / show the box for the cards
-function showSection(){
-  sectionDisplay.removeClass("hide")
+function showSection() {
+  sectionDisplay.removeClass("hide");
 }
 
 //Hide the filters
-function hideSection(){
-  sectionDisplay.addClass("hide")
+function hideSection() {
+  sectionDisplay.addClass("hide");
 }
 
 //Clear the pre search place holder
@@ -278,9 +281,8 @@ function addPlaceholder() {
 }
 
 function clearSearchField() {
-  citySearch.val("") 
+  citySearch.val("");
 }
-
 
 //On submit on search form it will run the function
 $("#search-form").submit(function (event) {
@@ -292,15 +294,14 @@ $("#search-form").submit(function (event) {
 });
 
 //Home button to go back to the main placholder screen
-$("#reset").click(function(){
+$("#reset").click(function () {
   clearDisplay();
   hideSection();
   addPlaceholder();
   clearSearchField();
+});
 
-})
-
-/* function initMap(lati, long, tit) {
+ function initMap(lati, long, tit) {
   // The location of restaurants
   const place = {
     lat: lati[0],
@@ -317,9 +318,7 @@ $("#reset").click(function(){
     const marker = new google.maps.Marker({
       position: new google.maps.LatLng(lati[count], long[count]),
       map: map,
-      draggable :true,
-      animation : google.maps.Animation.DROP,
       title: tit[count],
-    }); 
+    });
   }
 }
