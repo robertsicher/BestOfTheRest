@@ -183,7 +183,7 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
       lat.push(Number(restaurant.location.latitude));
       lon.push(Number(restaurant.location.longitude));
       location.push(restaurant.location.locality);
-      /* initMap(lat, lon, location); */
+       initMap(lat, lon, location); 
     });
     $(".animate-fade-in").fadeIn(1000);
   });
@@ -317,8 +317,9 @@ $("#reset").click(function () {
   clearSearchField();
 });
 
-/* function initMap(lati, long, tit) {
+ function initMap(lati, long, tit) {
   // The location of restaurants
+  let text = `\nClick on me to open the directions in google maps.`
   const place = {
     lat: lati[0],
     lng: long[0]
@@ -330,11 +331,21 @@ $("#reset").click(function () {
   });
   document.querySelector("#map").style.display = "block";
   // The marker, positioned at restaurants
-  for (let count = 0; count < 10; count++) {
+  for (let count = 0; count < lati.length; count++) {
     const marker = new google.maps.Marker({
+      draggable: true,
+      animation: google.maps.Animation.DROP,
       position: new google.maps.LatLng(lati[count], long[count]),
       map: map,
-      title: tit[count],
+      title: tit[count] + text,
     });
+    marker.addListener("click",() =>{
+      if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+      } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      }
+      window.open(`https://www.google.com/maps/search/?api=1&query=${lati[count]},${long[count]}`)
+    })
   }
-}*/
+}
