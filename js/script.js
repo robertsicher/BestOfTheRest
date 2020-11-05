@@ -310,7 +310,7 @@ $("#search-form").submit(function (event) {
 });
 
 //Home button to go back to the main placholder screen
-$("#reset").click(function () {
+$(".reset").click(function () {
   clearDisplay();
   hideSection();
   addPlaceholder();
