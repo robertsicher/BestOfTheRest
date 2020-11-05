@@ -27,8 +27,8 @@
 				<div class="uk-width-expand">
 					<form id="search-form" action="submit">
 						<div class="uk-inline uk-width-1-1">
-							<!--  this button was an a tag!-->
 							<button href="" class="uk-form-icon uk-form-icon-flip" data-uk-icon="icon: search"></button>
+
 							<input class="uk-input uk-width-1-1 search-fld" type="text" placeholder="Enter Your City"
 								autofocus>
 							<button class="search-filter" hidden>Search</button>
@@ -41,40 +41,51 @@
 						<li class="uk-visible@s"><a href="#modal-center" uk-toggle>About Us</a></li>
 						<div id="modal-center" class="uk-flex-top" uk-modal>
 							<div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-
 								<button class="uk-modal-close-default" type="button" uk-close></button>
-
 								<div class="uk-child-width-expand@s" uk-grid>
 									<div class="uk-grid-item-match">
 
 										<h3>About Us</h3>
 										<p>
-											Welcome to Best Of The Rest a brand new website designed to help you find the top  10 restaurants in your city
-										. <br><br> 
-											You can narrow it down further by choice of cuisines. <br> <br>
-											To begin using Best Of The Rest please type your city into the search bar  
-											
-											<br> <br>lets get you wining and dining in the best restaurants in the UK. 
+											Welcome to Best Of The Rest. We're here to help you find the best
+											restaurants in your city.
+											<br><br>
+											Use the cuisines filter to find what you're looking for.
 										</p>
-
 									</div>
-
 								</div>
-
 							</div>
 						</div>
+						<li id="" class="">
+							<button class="uk-button uk-button-link" type="button">History<span
+									uk-icon="icon: chevron-down"></span></button>
+							<div uk-dropdown="boundary: .boundary; offset: 30; animation: uk-animation-slide-top-small; duration: 1000">
+								<ul class="uk-nav uk-dropdown-nav">
+									<li class="uk-active"><a href="#">History 1</a></li>
+									<li class="uk-active"><a href="#">History 2</a></li>
+									<li class="uk-active"><a href="#">History 3</a></li>
+									<li class="uk-active"><a href="#">History 4</a></li>
+									<li class="uk-active"><a href="#">History 5</a></li>
+								</ul>
+							</div>
+						</li>
 					</ul>
 				</div>
+			</div>
+			<div id="alert-box">
+
 			</div>
 		</div>
 	</header>
 
 
 	<!--/HEADER-->
-	<div class="spacer"></div>
 	<!--Placholder-->
 	<div class="place-holder">
-		<h1 class="place-holder-text">Best Of The Rest</h1>
+		<div class="uk-overlay-primary uk-position-cover"></div>
+		<div class="uk-overlay uk-position-center uk-light">
+			<h1 class="place-holder-text">Best Of The Rest</h1>
+		</div>
 	</div>
 	<!--CARDS WRAPPER-->
 	<section id="section" class="uk-section uk-section-small uk-section-default uk-padding-remove-bottom hide">
@@ -97,9 +108,8 @@
 			<button class="uk-button uk-button-secondary uk-float-left uk-width-1-1" type="button">Cuisine</button>
 			<div uk-dropdown="pos: bottom-justify; boundary: .boundary-align; boundary-align: true; mode: click"
 				id="cuisine-container">
-				<div class="uk-nav uk-dropdown-nav grid-layout">
+				<div class="uk-nav uk-dropdown-nav grid-layout uk-text-center">
 
-					
 					<button id='all-card' class='uk-button uk-button-secondary' data-cuisine="0">Top 10</button>
 
 					<button id='African-card' class='uk-button uk-button-secondary' data-cuisine="152">African</button>
@@ -122,9 +132,8 @@
 
 					<button id='Thai-card' class='uk-button uk-button-secondary' data-cuisine="95">Thai</button>
 
-
 					<button id='Turkish-card' class='uk-button uk-button-secondary' data-cuisine="142">Turkish</button>
-					
+
 					</li>
 
 				</div>
@@ -142,7 +151,7 @@
 	<!--/CARDS WRAPPER-->
 	<!-- Google MAP-->
 	<div id="map"
-		class="uk-grid uk-grid-medium uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l  uk-child-width-1-5@xl uk-grid-match js-filter"
+		class="uk-grid uk-grid-medium uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l  uk-child-width-1-5@xl uk-grid-match js-filter uk-margin-top"
 		data-uk-grid="masonry: true" data-uk-sortable="handle: .drag-icon"></div>
 
 	<!-- JS FILES -->
