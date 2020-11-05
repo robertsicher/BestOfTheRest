@@ -32,7 +32,7 @@ h1 {
 
 .uk-placeholder{
   border: none;
-  padding: 5px 20px 10px 20px;
+  padding: 50px 20px 10px 20px;
 }
 
 .place-holder-text {
@@ -88,31 +88,6 @@ h1 {
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.01em;
-}
-
-.uk-placeholder{
-  border: none;
-  padding: 10px 20px;
-}
-
-.cuisine-padding{
-  padding-top: 5px;
-}
-
-.uk-subnav li a {
-  border-radius: 3px;
-}
-
-.uk-subnav li.uk-active:nth-child(3) a {
-  background-color: #8630f0;
-}
-
-.uk-subnav li.uk-active:nth-child(4) a {
-  background-color: #f03a7f;
-}
-
-.uk-subnav li.uk-active:nth-child(5) a {
-  background-color: #e84df0;
 }
 
 .uk-card .uk-overlay-primary {
