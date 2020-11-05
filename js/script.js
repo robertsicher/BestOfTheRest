@@ -45,26 +45,31 @@ const queryUrlLocation = "https://developers.zomato.com/api/v2.1/cities?q=";
 const restaurantDisplay = $("#restaurant-display");
 const sectionDisplay = $("#section");
 const preSearchPlaceHolder = $(".place-holder");
-
+const historyDropdown = $("#historyDropdown");
 const searchHistory = $(".searchHistory");
 const historyButton = $(".historyButton");
-const alertBox = $("#alert-box")
+const alertBox = $("#alert-box");
 let currentCityID = "";
 const cityNameArray = [];
 
 $(window).ready(function () {
-  let searchStorage = localStorage.getItem("City Searches");
+  setSearchHistory();
+});
+
+function setSearchHistory() {
+  historyDropdown.empty();
+  let searchStorage = localStorage.getItem("citySearches");
   let searchArray = JSON.parse(searchStorage);
   searchArray.forEach((search) => {
-    searchHistory.append(addHistoryButton(search));
+    historyDropdown.append(addHistoryButton(search));
   });
-});
+}
 
 // takes input when user searches for city
 function citySearchQuery() {
   $.ajax({
-      url: queryUrlLocation + citySearch.val() + apiKey,
-    })
+    url: queryUrlLocation + citySearch.val() + apiKey,
+  })
     .then(function (response) {
       // returned with an array of options for search
       let countryName = response.location_suggestions;
@@ -77,55 +82,67 @@ function citySearchQuery() {
       const cityName = output[0].name;
       currentCityID = cityOutput;
       developedRestaurantSearch(cityOutput);
-      console.log(cityName);
       // pushing city name to an array on search
       cityNameArray.push(cityName);
-      searchHistoryButtons(cityNameArray);
+      addToHistory(cityName);
     })
     .catch(function () {
       alert("Error");
     });
 }
+function addToHistory(cityName) {
+  const citySearches = JSON.parse(localStorage.getItem("citySearches"));
+  if (citySearches) {
+    const citySearch = citySearches.find((c) => c === cityName);
+    if (!citySearch) {
+      citySearches.push(cityName);
+      localStorage.setItem("citySearches", JSON.stringify(citySearches));
+    }
+  } else {
+    localStorage.setItem("citySearches", JSON.stringify([cityName]));
+  }
+  setSearchHistory();
+}
+
 // function to create the search history buttons
-function searchHistoryButtons(cityNameArray) {
+/* function searchHistoryButtons(cityNameArray) {
   // create an array with only unique entries
   let uniqueSearches = Array.from(new Set(cityNameArray));
   console.log(uniqueSearches);
   // set to session storage
   localStorage.setItem("City Searches", JSON.stringify(uniqueSearches));
-  /*  uniqueSearches.forEach((search) => {
-    searchHistory.append(addHistoryButton(search));
-  }); */
-}
+  uniqueSearches.forEach((search) => {
+    historyDropdown.append(addHistoryButton(search));
+  });
+} */
 
 function addHistoryButton(search) {
-  return ` 
-  <button class='historyButton uk-button uk-button-secondary' id='10' data-location='${search}'>${search}</button>
-  
+  return `<li class="uk-active">
+  <button class='historyButton uk-button uk-button-link' data-location='${search}'>${search}</button>
+  </li>
   `;
 }
 
-$(".searchHistory").on("click", function (event) {
+historyDropdown.on("click", function (event) {
   let historyData = event.target.getAttribute("data-location");
   citySearch.val(historyData);
-  citySearchQuery();
   $(".search-filter").click();
 });
 
 //Alert to create a pop up to suggest changes to the edit
 //function badSearch() {
-  //return ` <div uk-alert>
-  //<a class="uk-alert-close" uk-close></a>
-  //<h3>Notice</h3>
-  //<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-    //labore et dolore magna aliqua.</p>
+//return ` <div uk-alert>
+//<a class="uk-alert-close" uk-close></a>
+//<h3>Notice</h3>
+//<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+//labore et dolore magna aliqua.</p>
 //</div>`
 //}
 
 //function badSearchReturn() {
-  //if ($("#alert-box").innerHTML === "") {
-    //$("#alert-box").html(badSearch())
-  //}
+//if ($("#alert-box").innerHTML === "") {
+//$("#alert-box").html(badSearch())
+//}
 //}
 
 const cuisineArray = [];
@@ -146,7 +163,8 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
   clearDisplay();
   const cuisineSearch = "&cuisines=" + cuisineID;
   $.ajax({
-    url: developedSearchStart +
+    url:
+      developedSearchStart +
       cityOutput +
       cuisineSearch +
       developedSearchEnd +
@@ -160,9 +178,7 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
     // for each restaurant in the best restaurant array
     // will need to add more to display address, links, menus, reviews etc
 
-    bestRestaurants.forEach(({
-      restaurant
-    }) => {
+    bestRestaurants.forEach(({ restaurant }) => {
       restaurantDisplay.append(createCard(restaurant));
       lat.push(Number(restaurant.location.latitude));
       lon.push(Number(restaurant.location.longitude));
@@ -197,7 +213,7 @@ function createCard(restaurant) {
                 restaurant.cuisines,
                 3
               )}</h6>
-							<p class="uk-text-small uk-text-muted"id="text">${
+							<p class="uk-text-small uk-text-muted address-height"id="text">${
                 restaurant.location.address
               }</p>
 						</div>
@@ -321,4 +337,4 @@ $("#reset").click(function () {
       title: tit[count],
     });
   }
-}
+}*/
