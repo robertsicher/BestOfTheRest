@@ -92,11 +92,13 @@ return `<div uk-alert>
 </div>`
 }
 
+ 
 function badSearchReturn(){
  let badSearchText =  badSearch()
 $("#alert-box").html(badSearchText)
 }
 
+ 
 // each cuisine button has data corresponding to cuisine ID search in API
 $("#cuisine-container button").click(function () {
   let cuisineData = $(this).attr("data-cuisine");
@@ -133,7 +135,9 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
       lat.push(Number(restaurant.location.latitude));
       lon.push(Number(restaurant.location.longitude));
       location.push(restaurant.location.locality);
+ 
       initMap(lat, lon, location); 
+ 
     });
     // animates cards to look nicer
     $(".animate-fade-in").fadeIn(1000);
@@ -266,7 +270,7 @@ $("#reset").click(function () {
 
 function initMap(lati, long, tit) {
   // The location of restaurants
-  let text = `\nClick on me to open the directions in google maps.`
+  let text = `\nClick on me to open the directions in google maps.`;
   const place = {
     lat: lati[0],
     lng: long[0],
@@ -286,13 +290,15 @@ function initMap(lati, long, tit) {
       map: map,
       title: tit[count] + text,
     });
-    marker.addListener("click",() =>{
+    marker.addListener("click", () => {
       if (marker.getAnimation() !== null) {
         marker.setAnimation(null);
       } else {
         marker.setAnimation(google.maps.Animation.BOUNCE);
       }
-      window.open(`https://www.google.com/maps/search/?api=1&query=${lati[count]},${long[count]}`)
-    })
+      window.open(
+        `https://www.google.com/maps/search/?api=1&query=${lati[count]},${long[count]}`
+      );
+    });
   }
 }
