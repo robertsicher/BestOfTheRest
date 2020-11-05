@@ -28,7 +28,7 @@ h1 {
   background-color: grey;
 }
 
-.uk-placeholder{
+.uk-placeholder {
   border: none;
   padding: 5px 20px 10px 20px;
 }
@@ -87,19 +87,16 @@ h1 {
   letter-spacing: 0.01em;
 }
 
-<<<<<<< Updated upstream
-.uk-placeholder{
+<<<<<<< Updated upstream .uk-placeholder {
   border: none;
   padding: 10px 20px;
 }
 
-.cuisine-padding{
+.cuisine-padding {
   padding-top: 5px;
 }
 
-=======
->>>>>>> Stashed changes
-.uk-subnav li a {
+=======>>>>>>>Stashed changes .uk-subnav li a {
   border-radius: 3px;
 }
 
@@ -227,4 +224,11 @@ p {
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 1rem;
   text-align: center;
+}
+
+#searchHistory {
+  display: inline;
+  white-space: pre-wrap;
+  text-align: center;
+  margin: 10px;
 }
