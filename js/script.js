@@ -337,4 +337,4 @@ $("#reset").click(function () {
       title: tit[count],
     });
   }
-}*/
+}
