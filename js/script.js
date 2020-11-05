@@ -274,7 +274,9 @@ function initMap(lati, long, tit) {
     const marker = new google.maps.Marker({
       position: new google.maps.LatLng(lati[count], long[count]),
       map: map,
+      draggable :true,
+      animation : google.maps.Animation.DROP,
       title: tit[count],
-    });
+    }); 
   }
 }
