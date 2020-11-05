@@ -262,6 +262,7 @@ function placeHolderImage(restaurant) {
 //Clear the current search function
 function clearDisplay() {
   restaurantDisplay.empty();
+  $("#alert-box").html("")
 }
 
 //IF ELSE statement to minimise code
