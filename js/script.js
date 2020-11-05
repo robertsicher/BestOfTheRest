@@ -133,11 +133,7 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
       lat.push(Number(restaurant.location.latitude));
       lon.push(Number(restaurant.location.longitude));
       location.push(restaurant.location.locality);
-<<<<<<< HEAD
       initMap(lat, lon, location); 
-=======
-      initMap(lat, lon, location);
->>>>>>> main
     });
     // animates cards to look nicer
     $(".animate-fade-in").fadeIn(1000);
@@ -270,11 +266,7 @@ $("#reset").click(function () {
 
 function initMap(lati, long, tit) {
   // The location of restaurants
-<<<<<<< HEAD
   let text = `\nClick on me to open the directions in google maps.`
-=======
-  let text = `\nClick on me to open the directions in google maps.`;
->>>>>>> main
   const place = {
     lat: lati[0],
     lng: long[0],
@@ -293,19 +285,6 @@ function initMap(lati, long, tit) {
       position: new google.maps.LatLng(lati[count], long[count]),
       map: map,
       title: tit[count] + text,
-<<<<<<< HEAD
-=======
-    });
-    marker.addListener("click", () => {
-      if (marker.getAnimation() !== null) {
-        marker.setAnimation(null);
-      } else {
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-      }
-      window.open(
-        `https://www.google.com/maps/search/?api=1&query=${lati[count]},${long[count]}`
-      );
->>>>>>> main
     });
     marker.addListener("click",() =>{
       if (marker.getAnimation() !== null) {
