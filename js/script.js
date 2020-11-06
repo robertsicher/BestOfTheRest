@@ -135,14 +135,17 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
     let lat = [];
     let lon = [];
     let location = [];
+    let restaurantName = [];
+    let restaurantAdrress = []
     // for each restaurant in the best restaurant array
     bestRestaurants.forEach(({ restaurant }) => {
       restaurantDisplay.append(createCard(restaurant));
       lat.push(Number(restaurant.location.latitude));
       lon.push(Number(restaurant.location.longitude));
       location.push(restaurant.location.locality);
- 
-      initMap(lat, lon, location,restaurant); 
+      restaurantName.push(restaurant.name);
+      restaurantAdrress.push(restaurant.location.address)
+      initMap(lat, lon, location,restaurantName,restaurantAdrress); 
  
     });
     // animates cards to look nicer
@@ -277,7 +280,7 @@ $(".reset").click(function () {
   clearSearchField();
 });
 
-function initMap(lati, long, tit, restaurant) {
+function initMap(lati, long, tit, restaurantName,restaurantAdrress) {
    
   // The location of restaurants
   let text = `\nClick on me to open the directions in google maps.`;
@@ -299,15 +302,15 @@ function initMap(lati, long, tit, restaurant) {
       animation: google.maps.Animation.DROP,
       position: new google.maps.LatLng(lati[count], long[count]),
       map: map,
-      title: tit[count] + text,
+      title: restaurantName[count] + text,
     });
-    console.log(restaurant.name);
-    var infowindow = new google.maps.InfoWindow({
-      content: `<span class="cat-txt">${restaurant.name}</span>
+    console.log(restaurantName[0]);
+    let infowindow = new google.maps.InfoWindow({
+      content: `<span class="cat-txt">${restaurantName[count]}</span>
     <br>
-    <span class='cat-txt'>${restaurant.location.address}</span>
+    <span class='cat-txt'>${restaurantAdrress[count]}</span>
     <br>
-    <a id = "Direction" href='https://www.google.com/maps/search/?api=1&query=${lati[count]},${long[count]}'>Directions</a>
+    <a id = "Direction" target="_blank" href='https://www.google.com/maps/search/?api=1&query=${lati[count]},${long[count]}'>Directions</a>
     `,
     });
     marker.addListener("click", () => {
