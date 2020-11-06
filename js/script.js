@@ -84,9 +84,9 @@ historyDropdown.on("click", function (event) {
 
 //Alert to create a pop up to suggest changes to the edit
 function badSearch() {
-return `<div uk-alert>
+return `<div uk-alert class="uk-text-center">
 <a class="uk-alert-close" uk-close></a>
-<h3>Notice</h3>
+<h3 class="">Notice</h3>
 <p>Sorry...</p>
 <p>The city you are searching for was not found.</p>
 </div>`
@@ -261,7 +261,7 @@ $("#search-form").submit(function (event) {
 });
 
 //Home button to go back to the main placholder screen
-$("#reset").click(function () {
+$(".reset").click(function () {
   clearDisplay();
   hideSection();
   addPlaceholder();
@@ -277,7 +277,7 @@ function initMap(lati, long, tit) {
   };
   // The map, centered at restaurants
   const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 12,
+    zoom: 11,
     center: place,
   });
   document.querySelector("#map").style.display = "block";
