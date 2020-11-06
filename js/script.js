@@ -92,10 +92,15 @@ return `<div uk-alert class="uk-text-center">
 </div>`
 }
 
- 
 function badSearchReturn(){
  let badSearchText =  badSearch()
+ //Add the bad search text
 $("#alert-box").html(badSearchText)
+//Clears the map
+$("#map").attr("style","display:none")
+//Clears the map header 
+$("#map-header").attr("style","display:none")
+
 }
 
  
@@ -115,6 +120,7 @@ const developedSearchEnd = "&entity_type=city&count=10&sort=rating&order=desc";
 
 function developedRestaurantSearch(cityOutput, cuisineID) {
   clearDisplay();
+  clearAlert();
   const cuisineSearch = "&cuisines=" + cuisineID;
   $.ajax({
     url:
@@ -136,7 +142,7 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
       lon.push(Number(restaurant.location.longitude));
       location.push(restaurant.location.locality);
  
-      initMap(lat, lon, location); 
+      initMap(lat, lon, location,restaurant); 
  
     });
     // animates cards to look nicer
@@ -224,6 +230,9 @@ function placeHolderImage(restaurant) {
 //Clear the current search function
 function clearDisplay() {
   restaurantDisplay.empty();
+}
+//clear the bad search box
+function clearAlert(){
   $("#alert-box").html("")
 }
 
@@ -268,7 +277,8 @@ $(".reset").click(function () {
   clearSearchField();
 });
 
-function initMap(lati, long, tit) {
+function initMap(lati, long, tit, restaurant) {
+   
   // The location of restaurants
   let text = `\nClick on me to open the directions in google maps.`;
   const place = {
@@ -281,6 +291,7 @@ function initMap(lati, long, tit) {
     center: place,
   });
   document.querySelector("#map").style.display = "block";
+  document.querySelector("#map-header").style.display = "block";
   // The marker, positioned at restaurants
   for (let count = 0; count < lati.length; count++) {
     const marker = new google.maps.Marker({
@@ -290,15 +301,22 @@ function initMap(lati, long, tit) {
       map: map,
       title: tit[count] + text,
     });
+    console.log(restaurant.name);
+    var infowindow = new google.maps.InfoWindow({
+      content: `<span class="cat-txt">${restaurant.name}</span>
+    <br>
+    <span class='cat-txt'>${restaurant.location.address}</span>
+    <br>
+    <a id = "Direction" href='https://www.google.com/maps/search/?api=1&query=${lati[count]},${long[count]}'>Directions</a>
+    `,
+    });
     marker.addListener("click", () => {
+      infowindow.open(map, marker);
       if (marker.getAnimation() !== null) {
         marker.setAnimation(null);
       } else {
         marker.setAnimation(google.maps.Animation.BOUNCE);
       }
-      window.open(
-        `https://www.google.com/maps/search/?api=1&query=${lati[count]},${long[count]}`
-      );
     });
   }
 }

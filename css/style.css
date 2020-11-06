@@ -124,6 +124,10 @@ button {
 .address-height {
   height: 30px;
 }
+/*Map header*/
+#map-header{
+  display:none;
+}
 
 /* Set the size of the div element that contains the map */
 #map {
@@ -148,3 +152,10 @@ button {
   gap: 1rem;
   text-align: center;
 }
+
+/*Map directions word*/
+a#Direction{
+  color:blue;
+  text-decoration: underline;
+}
+
