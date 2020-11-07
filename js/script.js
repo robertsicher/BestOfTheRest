@@ -98,8 +98,6 @@ function badSearchReturn(){
 $("#alert-box").html(badSearchText)
 //Clears the map
 $("#map").attr("style","display:none")
-//Clears the map header 
-$("#map-header").attr("style","display:none")
 
 }
 
@@ -294,7 +292,6 @@ function initMap(lati, long, tit, restaurantName,restaurantAdrress) {
     center: place,
   });
   document.querySelector("#map").style.display = "block";
-  document.querySelector("#map-header").style.display = "block";
   // The marker, positioned at restaurants
   for (let count = 0; count < lati.length; count++) {
     const marker = new google.maps.Marker({
