@@ -10,6 +10,7 @@ const historyButton = $(".historyButton");
 const alertBox = $("#alert-box");
 let currentCityID = "";
 const cityNameArray = [];
+const mapContainer = $("#map-container")
 
 // On page load run the search history function
 $(window).ready(function () {
@@ -260,12 +261,23 @@ function clearSearchField() {
   citySearch.val("");
 }
 
+//SHow map box
+function showMapContainer(){
+  mapContainer.removeClass("hide")
+}
+
+//hide map box
+function hideMapContainer(){
+  mapContainer.addClass("hide")
+}
+
 //On submit on search form it will run the function
 $("#search-form").submit(function (event) {
   event.preventDefault();
   clearPlaceholder();
   clearDisplay();
   showSection();
+  showMapContainer();
   citySearchQuery();
 });
 
@@ -274,6 +286,7 @@ $(".reset").click(function () {
   clearDisplay();
   hideSection();
   addPlaceholder();
+  hideMapContainer();
   clearSearchField();
 });
 
