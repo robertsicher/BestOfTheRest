@@ -130,7 +130,6 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
       developedSearchEnd +
       apiKey,
   }).then(function (restaurants) {
-    console.log("restaraunt response ", restaurants);
     const bestRestaurants = restaurants.restaurants;
     let lat = [];
     let lon = [];
@@ -304,7 +303,6 @@ function initMap(lati, long, tit, restaurantName,restaurantAdrress) {
       map: map,
       title: restaurantName[count] + text,
     });
-    console.log(restaurantName[0]);
     let infowindow = new google.maps.InfoWindow({
       content: `<span class="cat-txt">${restaurantName[count]}</span>
     <br>
