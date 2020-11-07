@@ -10,6 +10,7 @@ const historyButton = $(".historyButton");
 const alertBox = $("#alert-box");
 let currentCityID = "";
 const cityNameArray = [];
+const mapContainer = $("#map-container")
 
 // On page load run the search history function
 $(window).ready(function () {
@@ -84,18 +85,21 @@ historyDropdown.on("click", function (event) {
 
 //Alert to create a pop up to suggest changes to the edit
 function badSearch() {
-return `<div uk-alert>
+return `<div uk-alert class="uk-text-center">
 <a class="uk-alert-close" uk-close></a>
-<h3>Notice</h3>
+<h3 class="">Notice</h3>
 <p>Sorry...</p>
 <p>The city you are searching for was not found.</p>
 </div>`
 }
 
- 
 function badSearchReturn(){
  let badSearchText =  badSearch()
+ //Add the bad search text
 $("#alert-box").html(badSearchText)
+//Clears the map
+$("#map").attr("style","display:none")
+
 }
 
  
@@ -115,6 +119,7 @@ const developedSearchEnd = "&entity_type=city&count=10&sort=rating&order=desc";
 
 function developedRestaurantSearch(cityOutput, cuisineID) {
   clearDisplay();
+  clearAlert();
   const cuisineSearch = "&cuisines=" + cuisineID;
   $.ajax({
     url:
@@ -124,19 +129,21 @@ function developedRestaurantSearch(cityOutput, cuisineID) {
       developedSearchEnd +
       apiKey,
   }).then(function (restaurants) {
-    console.log("restaraunt response ", restaurants);
     const bestRestaurants = restaurants.restaurants;
     let lat = [];
     let lon = [];
     let location = [];
+    let restaurantName = [];
+    let restaurantAdrress = []
     // for each restaurant in the best restaurant array
     bestRestaurants.forEach(({ restaurant }) => {
       restaurantDisplay.append(createCard(restaurant));
       lat.push(Number(restaurant.location.latitude));
       lon.push(Number(restaurant.location.longitude));
       location.push(restaurant.location.locality);
- 
-      initMap(lat, lon, location); 
+      restaurantName.push(restaurant.name);
+      restaurantAdrress.push(restaurant.location.address)
+      initMap(lat, lon, location,restaurantName,restaurantAdrress); 
  
     });
     // animates cards to look nicer
@@ -224,6 +231,9 @@ function placeHolderImage(restaurant) {
 //Clear the current search function
 function clearDisplay() {
   restaurantDisplay.empty();
+}
+//clear the bad search box
+function clearAlert(){
   $("#alert-box").html("")
 }
 
@@ -251,24 +261,37 @@ function clearSearchField() {
   citySearch.val("");
 }
 
+//SHow map box
+function showMapContainer(){
+  mapContainer.removeClass("hide")
+}
+
+//hide map box
+function hideMapContainer(){
+  mapContainer.addClass("hide")
+}
+
 //On submit on search form it will run the function
 $("#search-form").submit(function (event) {
   event.preventDefault();
   clearPlaceholder();
   clearDisplay();
   showSection();
+  showMapContainer();
   citySearchQuery();
 });
 
 //Home button to go back to the main placholder screen
-$("#reset").click(function () {
+$(".reset").click(function () {
   clearDisplay();
   hideSection();
   addPlaceholder();
+  hideMapContainer();
   clearSearchField();
 });
 
-function initMap(lati, long, tit) {
+function initMap(lati, long, tit, restaurantName,restaurantAdrress) {
+   
   // The location of restaurants
   let text = `\nClick on me to open the directions in google maps.`;
   const place = {
@@ -277,7 +300,7 @@ function initMap(lati, long, tit) {
   };
   // The map, centered at restaurants
   const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 12,
+    zoom: 11,
     center: place,
   });
   document.querySelector("#map").style.display = "block";
@@ -288,17 +311,23 @@ function initMap(lati, long, tit) {
       animation: google.maps.Animation.DROP,
       position: new google.maps.LatLng(lati[count], long[count]),
       map: map,
-      title: tit[count] + text,
+      title: restaurantName[count] + text,
+    });
+    let infowindow = new google.maps.InfoWindow({
+      content: `<span class="cat-txt">${restaurantName[count]}</span>
+    <br>
+    <span class='cat-txt'>${restaurantAdrress[count]}</span>
+    <br>
+    <a id = "Direction" target="_blank" href='https://www.google.com/maps/search/?api=1&query=${lati[count]},${long[count]}'>Directions</a>
+    `,
     });
     marker.addListener("click", () => {
+      infowindow.open(map, marker);
       if (marker.getAnimation() !== null) {
         marker.setAnimation(null);
       } else {
         marker.setAnimation(google.maps.Animation.BOUNCE);
       }
-      window.open(
-        `https://www.google.com/maps/search/?api=1&query=${lati[count]},${long[count]}`
-      );
     });
   }
 }

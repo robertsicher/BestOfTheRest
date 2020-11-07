@@ -1,7 +1,41 @@
+/*Elements*/
+h1 {
+  color: white;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit; 
+}
+
+a, a:hover, a:focus, a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+img[data-src][src*="data:image"] {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+p {
+  text-align: center;
+}
+
+button {
+  padding: 0;
+  text-align: center;
+}
+
+/*Logo Styling*/
 .logo-text {
   font-family: "Bebas Neue", cursive;
 }
 
+.green {
+  color: lawngreen;
+}
+
+/*Header Styling*/
 #site-head {
   padding: 10px 0;
   position: fixed;
@@ -14,14 +48,19 @@
   background-color: black;
 }
 
-h1 {
-  color: white;
+.search-fld {
+  border-radius: 50px;
+  padding: 0 1rem;
 }
 
-.green {
-  color: lawngreen;
+#searchHistory {
+  display: inline;
+  white-space: pre-wrap;
+  text-align: center;
+  margin: 10px;
 }
 
+/*Homescreen Placeholder*/
 .place-holder {
   width: 100%;
   height: 100%;
@@ -30,16 +69,16 @@ h1 {
   background-size: cover;
 }
 
-.uk-placeholder {
-  border: none;
-  padding: 50px 20px 10px 20px;
-}
-
 .place-holder-text {
-  font-family: "Tangerine", cursive;
+  font-family: "Bebas Neue", cursive;
   padding: 260px 0;
   text-align: center;
   font-size: 100px;
+}
+
+.uk-placeholder {
+  border: none;
+  padding: 50px 20px 10px 20px;
 }
 
 #site-foot {
@@ -51,15 +90,7 @@ h1 {
   font-size: 0.8rem;
 }
 
-.uk-section-xsmall {
-  padding-top: 0.6rem;
-  padding-bottom: 0.6rem;
-}
-
-.spacer {
-  height: 60px;
-}
-
+/*Card Styling*/
 .uk-card {
   border-top: 2px solid;
   position: relative;
@@ -90,91 +121,12 @@ h1 {
   letter-spacing: 0.01em;
 }
 
-.uk-card .uk-overlay-primary {
-  padding: 0.5rem;
-  text-align: center;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  opacity: 0.7;
+.address-height {
+  height: 30px;
 }
-
-img[data-src][src*="data:image"] {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-.search-fld {
-  border-radius: 50px;
-  padding: 0 1rem;
-}
-
-.uk-dropdown.drop-nav {
-  border-radius: 4px;
-  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.1);
-  width: 300px;
-}
-
-.uk-dropdown.drop-comments {
-  width: 370px;
-}
-
-.drop-nav::after {
-  bottom: 100%;
-  right: 4%;
-  border: solid transparent;
-  content: "";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-  border-color: rgba(255, 255, 255, 0);
-  border-bottom-color: #ffffff;
-  border-width: 6px;
-  margin-left: -6px;
-}
-
-.uk-dropdown.uk-dropdown-right-center::after {
-  right: 100%;
-  top: 50%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-  border-color: rgba(255, 255, 255, 0);
-  border-right-color: #ffffff;
-  border-width: 6px;
-  margin-top: -6px;
-}
-
-.uk-dropdown.uk-dropdown-left-center::after {
-  left: 100%;
-  top: 50%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-  border-color: rgba(255, 255, 255, 0);
-  border-left-color: #ffffff;
-  border-width: 6px;
-  margin-top: -6px;
-}
-
-.message {
-  font-size: 0.85rem;
-  display: block;
-  line-height: 1.3rem;
-  padding: 0.5rem 0;
-}
-
-.uk-notification-message {
-  background-color: #1e87f0;
-  color: white;
-  font-size: 0.9rem;
-  border-radius: 3px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+/*Map header*/
+#map-header{
+  display:none;
 }
 
 /* Set the size of the div element that contains the map */
@@ -193,10 +145,7 @@ img[data-src][src*="data:image"] {
   display: none;
 }
 
-p {
-  text-align: center;
-}
-
+/*Layout CSS*/
 .grid-layout {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
@@ -204,18 +153,9 @@ p {
   text-align: center;
 }
 
-#searchHistory {
-  display: inline;
-  white-space: pre-wrap;
-  text-align: center;
-  margin: 10px;
+/*Map directions word*/
+a#Direction{
+  color:blue;
+  text-decoration: underline;
 }
 
-button {
-  padding: 0;
-  text-align: center;
-}
-
-.address-height {
-  height: 30px;
-}
